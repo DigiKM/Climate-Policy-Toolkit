@@ -1,0 +1,193 @@
+
+<h2 class="sr-only">Climate Policy Advisor Option A</h2>
+<style>
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:12px}
+.pill-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pill{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px}
+.bar-track{height:5px;background:var(--color-border-tertiary);border-radius:3px;overflow:hidden;margin-top:6px}
+.bar-fill{height:100%;border-radius:3px;transition:width 0.5s ease}
+.mlabel{font-size:11px;color:var(--color-text-secondary);margin-bottom:2px}
+.mval{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.badge{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px}
+.focus-tag{font-size:11px;font-weight:500;padding:3px 10px;border-radius:var(--border-radius-md);background:var(--color-background-info);color:var(--color-text-info)}
+.burden-triple{background:#FCEBEB;color:#791F1F}
+.burden-double{background:#FAEEDA;color:#633806}
+.burden-single{background:#EAF3DE;color:#27500A}
+.tab-strip{display:flex;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:16px}
+.tab{font-size:13px;font-weight:500;padding:8px 16px;cursor:pointer;color:var(--color-text-secondary);border-bottom:2px solid transparent;margin-bottom:-0.5px;background:none;border-top:none;border-left:none;border-right:none}
+.tab.active{color:var(--color-text-primary);border-bottom:2px solid #378ADD}
+.tab-panel{display:none}.tab-panel.active{display:block}
+.q-item{font-size:13px;color:var(--color-text-secondary);padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);line-height:1.5}
+.q-item:last-child{border-bottom:none}
+.rec-item{display:flex;gap:8px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px;color:var(--color-text-secondary);line-height:1.5}
+.rec-item:last-child{border-bottom:none}
+.rec-num{font-size:11px;font-weight:500;color:var(--color-text-secondary);min-width:18px;padding-top:1px}
+.case-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;margin-bottom:8px}
+.case-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 4px}
+.case-body{font-size:12px;color:var(--color-text-secondary);line-height:1.6;margin:0}
+select{width:100%;margin-bottom:10px}
+</style>
+
+<div style="padding:1rem 0">
+
+<div class="card">
+  <p style="font-size:11px;font-weight:500;color:var(--color-text-secondary);margin:0 0 12px;text-transform:uppercase;letter-spacing:0.06em">Policy context</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div><label class="mlabel">Country</label>
+    <select id="countrySelect" onchange="update()">
+      <option value="Chad">Chad</option>
+      <option value="India">India</option>
+      <option value="Brazil">Brazil</option>
+      <option value="Germany" selected>Germany</option>
+      <option value="Kenya">Kenya</option>
+    </select></div>
+    <div><label class="mlabel">Policy instrument</label>
+    <select id="policySelect" onchange="update()">
+      <option value="energy" selected>Energy pricing reform</option>
+      <option value="transport">Transport policy</option>
+      <option value="adaptation">Adaptation investment</option>
+      <option value="carbon">Carbon tax / ETS</option>
+      <option value="transition">Just transition programme</option>
+    </select></div>
+  </div>
+</div>
+
+<div class="card">
+  <p style="font-size:11px;font-weight:500;color:var(--color-text-secondary);margin:0 0 14px;text-transform:uppercase;letter-spacing:0.06em">Risk profile</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start">
+    <div>
+      <div class="pill-grid" id="pillGrid"></div>
+      <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+        <span class="badge" id="burdenBadge"></span>
+        <span class="focus-tag" id="focusTag"></span>
+      </div>
+    </div>
+    <div style="position:relative;height:200px">
+      <canvas id="radarChart" role="img" aria-label="Radar chart of climate risk indices for selected country">Climate risk radar.</canvas>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="tab-strip">
+    <button class="tab active" onclick="switchTab('recs',this)">Recommendations</button>
+    <button class="tab" onclick="switchTab('diag',this)">Diagnostic questions</button>
+    <button class="tab" onclick="switchTab('cases',this)">Case studies</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-recs">
+    <div id="recContent"></div>
+  </div>
+
+  <div class="tab-panel" id="tab-diag">
+    <div id="diagContent"></div>
+  </div>
+
+  <div class="tab-panel" id="tab-cases">
+    <div id="caseContent"></div>
+  </div>
+</div>
+
+<div style="text-align:right;margin-top:4px">
+  <button id="briefBtn">Draft a policy brief ↗</button>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const countries={
+  Chad:    {climate:8.1,social:9.4,transition:8.7,focus:"Social protection"},
+  India:   {climate:7.6,social:7.2,transition:6.1,focus:"Adaptation"},
+  Brazil:  {climate:6.3,social:5.5,transition:5.0,focus:"Just transition"},
+  Germany: {climate:3.8,social:2.4,transition:6.8,focus:"Workforce transition"},
+  Kenya:   {climate:7.9,social:6.8,transition:5.9,focus:"Climate adaptation"}
+};
+
+const diagMap={
+  climate:["Which populations live in flood plains, coastal zones, or heat-exposed informal settlements?","Are early warning systems accessible to rural and low-literacy communities?","How does climate exposure compound existing health or food security deficits?"],
+  social:["Which groups lack savings, insurance, or social protection buffers?","Are women and older workers adequately represented in adaptation planning?","Do current safety nets reach informal sector workers and rural households?"],
+  transition:["Which industries are at risk of contraction or stranding under this policy?","Does the workforce have the education level to access emerging green jobs?","Will the policy raise energy or transport costs for low-income households?"]
+};
+
+const policyRecs={
+  energy:["Embed targeted rebates or lump-sum transfers to offset regressive price effects.","Ring-fence a share of revenue from energy pricing for social protection expansion.","Ensure rural households without grid access are not penalised before alternatives exist."],
+  transport:["Pair EV transition support with public transport investment in peri-urban corridors.","Avoid fuel tax hikes without a compensatory package for rural car-dependent workers.","Gender-disaggregate mobility data before designing modal shift incentives."],
+  adaptation:["Direct climate finance to regions with highest combined exposure and social vulnerability.","Integrate community-led and Indigenous knowledge into local adaptation plans.","Strengthen health system capacity ahead of projected increases in heat-related illness."],
+  carbon:["Use expenditure-based incidence analysis to assess regressivity accurately.","Recycle at least 30% of revenues as direct transfers to bottom two income quintiles.","Coordinate with trading partners to prevent carbon leakage displacing emissions and jobs."],
+  transition:["Launch sector-specific retraining programmes 2–3 years before industry phase-out.","Provide income bridges for workers aged 45+ who face barriers to reskilling.","Negotiate Just Transition Partnerships with development banks for finance mobilisation."]
+};
+
+const caseStudies={
+  Chad:["Sahel food security crisis","Prolonged drought in the Lake Chad basin has reduced the lake's surface by 90% since the 1960s, displacing millions and intensifying resource conflicts. Social protection must be climate-contingent and shock-responsive.","Congo reforestation & women","Nature-based solutions in Central Africa show that reforestation led by women's networks can simultaneously generate income, sequester carbon, and build community resilience in fragile states."],
+  India:["Pakistan flooding analogy","Neighbouring Pakistan's 2023 floods — affecting 33 million people, with 44% below the poverty line — illustrate India's comparable exposure in low-lying, densely populated river deltas.","Gulf of Mexico wetlands","Mexico's gender-sensitive coastal adaptation project, integrating stilt housing, chinampas, and women-led water enterprises, offers a transferable model for India's coastal communities."],
+  Brazil:["Hydropower vulnerability","Colombia's dependence on hydropower (62% of electricity) shows how drought-driven generation shortfalls cascade into energy poverty and economic disruption — a direct parallel for Brazil's own hydro exposure.","Congo reforestation & women","Women-led reforestation in Virunga National Park demonstrates how nature-based solutions can generate livelihoods while protecting carbon sinks, relevant for Brazil's Amazon transition strategy."],
+  Germany:["Gilets jaunes, France 2018","A carbon tax on diesel triggered a three-week national blockade. Rural households spending over 15% of budgets on fuel perceived the policy as structurally unfair. Germany faces identical urban-rural asymmetries.","Coal transition, Germany & Poland","Germany's own coal phase-out in Lausitz and the Ruhr, alongside Poland's 2021 coal protests, shows that sequencing compensation before reform — not after — is the determinant of social acceptance."],
+  Kenya:["Kenya fuel protests 2021","Rising electricity rates linked to clean energy shifts sparked protests in low-income communities, pressuring a policy reversal. Energy pricing reform must include affordability safeguards from day one.","1.5°C compatible NDC","Kenya is one of only eight countries with policies aligned to 1.5°C — yet contributes 0.68% of global emissions. Equity in climate finance from developed nations is essential to sustaining this leadership."]
+};
+
+function getBurden(s){
+  const h=[s.climate,s.social,s.transition].filter(v=>v>=6.5).length;
+  if(h===3)return{label:"Triple burden",cls:"burden-triple"};
+  if(h===2)return{label:"Double burden",cls:"burden-double"};
+  return{label:"Moderate risk",cls:"burden-single"};
+}
+function barColor(v){return v>=7.5?"#E24B4A":v>=5.5?"#EF9F27":"#639922"}
+
+let radarInstance=null;
+
+function switchTab(id,btn){
+  document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  document.getElementById("tab-"+id).classList.add("active");
+  btn.classList.add("active");
+}
+
+function update(){
+  const c=document.getElementById("countrySelect").value;
+  const p=document.getElementById("policySelect").value;
+  const s=countries[c];
+
+  document.getElementById("pillGrid").innerHTML=[
+    {label:"Climate exposure",val:s.climate},
+    {label:"Social vulnerability",val:s.social},
+    {label:"Worker transition",val:s.transition}
+  ].map(d=>`<div class="pill"><div class="mlabel">${d.label}</div><div class="mval">${d.val.toFixed(1)}<span style="font-size:10px;color:var(--color-text-secondary)">/10</span></div><div class="bar-track"><div class="bar-fill" style="width:${d.val*10}%;background:${barColor(d.val)}"></div></div></div>`).join("");
+
+  const burden=getBurden(s);
+  const b=document.getElementById("burdenBadge");
+  b.textContent=burden.label; b.className="badge "+burden.cls;
+  document.getElementById("focusTag").textContent=s.focus;
+
+  document.getElementById("recContent").innerHTML=(policyRecs[p]||[]).map((r,i)=>`<div class="rec-item"><span class="rec-num">${i+1}.</span><span>${r}</span></div>`).join("");
+
+  document.getElementById("diagContent").innerHTML=Object.entries(diagMap).map(([key,qs])=>`
+    <div style="margin-bottom:12px">
+      <p style="font-size:12px;font-weight:500;margin:0 0 4px;color:var(--color-text-primary)">${key==="climate"?"Climate exposure":key==="social"?"Social vulnerability":"Transition exposure"}</p>
+      ${qs.map(q=>`<div class="q-item">${q}</div>`).join("")}
+    </div>`).join("");
+
+  const cs=caseStudies[c];
+  document.getElementById("caseContent").innerHTML=`
+    <div class="case-card"><p class="case-title">${cs[0]}</p><p class="case-body">${cs[1]}</p></div>
+    <div class="case-card"><p class="case-title">${cs[2]}</p><p class="case-body">${cs[3]}</p></div>`;
+
+  const isDark=matchMedia("(prefers-color-scheme: dark)").matches;
+  const gc=isDark?"rgba(255,255,255,0.12)":"rgba(0,0,0,0.1)";
+  const lc=isDark?"#B4B2A9":"#5F5E5A";
+  const rd={labels:["Climate\nexposure","Social\nvulnerability","Worker\ntransition"],datasets:[{label:c,data:[s.climate,s.social,s.transition],backgroundColor:isDark?"rgba(55,138,221,0.25)":"rgba(55,138,221,0.18)",borderColor:"#378ADD",borderWidth:2,pointBackgroundColor:"#378ADD",pointRadius:4}]};
+  const ro={responsive:true,maintainAspectRatio:false,scales:{r:{min:0,max:10,ticks:{stepSize:2,display:false},grid:{color:gc},angleLines:{color:gc},pointLabels:{color:lc,font:{size:11}}}},plugins:{legend:{display:false}}};
+
+  if(radarInstance){radarInstance.data=rd;radarInstance.options=ro;radarInstance.update();}
+  else{radarInstance=new Chart(document.getElementById("radarChart"),{type:"radar",data:rd,options:ro});}
+
+  document.getElementById("briefBtn").onclick=function(){
+    const country=document.getElementById("countrySelect").value;
+    const policy=document.getElementById("policySelect").value;
+    const labels={energy:"energy pricing reform",transport:"transport policy",adaptation:"adaptation investment",carbon:"carbon tax / ETS",transition:"just transition programme"};
+    sendPrompt("Based on the climate risk profile for "+country+" with a policy instrument of "+labels[policy]+", what are the most urgent equity-focused interventions I should propose in a policy brief?");
+  };
+}
+
+update();
+</script>
