@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Local Content Policy Trade-offs</title>
+<style>
+  :root{
+    --purple:#5c3a78;
+    --purple-bg:#f3edf7;
+    --navy:#345169;
+    --navy-bg:#eaf0f4;
+    --teal:#155c46;
+    --teal-bg:#e7f2ee;
+    --ink:#2a2a33;
+    --muted:#6b6b76;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    padding:0;
+    background:transparent;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);
+  }
+  .wrap{
+    max-width:680px;
+    margin:0 auto;
+    padding:10px 24px 5px;
+  }
+  .budget-note{
+    text-align:center;
+    font-size:12.5px;
+    color:var(--muted);
+    margin-bottom:22px;
+    font-style:italic;
+  }
+  .content-row{
+    display:flex;
+    align-items:flex-end;
+    gap:20px;
+    margin-bottom:0;
+  }
+  .sliders-col{
+    flex:0 1 50%;
+    max-width:50%;
+    min-width:0;
+  }
+  .analysis-col{
+    flex:0 1 50%;
+    max-width:50%;
+    min-width:0;
+  }
+  .row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:18px;
+  }
+  .row:last-child{margin-bottom:0;}
+  .icon-badge{
+    flex:0 0 auto;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:2px solid var(--c);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .icon-badge svg{width:22px;height:22px;stroke:var(--c);}
+  .row-main{flex:1 1 auto;min-width:0;}
+  .row-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:6px;
+  }
+  .row-label{
+    font-size:14px;
+    font-weight:600;
+    color:var(--c);
+  }
+  .row-value{
+    font-size:14px;
+    font-weight:700;
+    color:var(--c);
+    min-width:44px;
+    text-align:right;
+  }
+  input[type="range"]{
+    width:100%;
+    -webkit-appearance:none;
+    appearance:none;
+    height:6px;
+    border-radius:4px;
+    background:#e3e3ea;
+    outline:none;
+    accent-color:var(--c);
+  }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:18px;height:18px;
+    border-radius:50%;
+    background:var(--c);
+    cursor:pointer;
+    border:2px solid #fff;
+    box-shadow:0 0 0 1px var(--c);
+  }
+  input[type="range"]::-moz-range-thumb{
+    width:18px;height:18px;
+    border-radius:50%;
+    background:var(--c);
+    cursor:pointer;
+    border:2px solid #fff;
+    box-shadow:0 0 0 1px var(--c);
+  }
+  .triangle-area{
+    margin:30px 0 15px;
+    display:flex;
+    justify-content:center;
+  }
+  .feedback{
+    background:#fafafa;
+    border:1px solid #ececef;
+    border-left:4px solid var(--fc,#888);
+    border-radius:8px;
+    padding:14px 16px;
+    font-size:13.5px;
+    line-height:1.55;
+    color:var(--ink);
+    transition:border-color .25s ease;
+    min-height:64px;
+  }
+  .feedback strong{color:var(--fc,#888);}
+  .reset-btn{
+    display:block;
+    margin:0 auto 0;
+    background:none;
+    border:1px solid #d8d8de;
+    color:var(--muted);
+    font-size:12.5px;
+    padding:6px 14px;
+    border-radius:20px;
+    cursor:pointer;
+  }
+  .reset-btn:hover{background:#f5f5f7;}
+  @media (max-width:480px){
+    .content-row{flex-direction:column;align-items:stretch;}
+    .sliders-col,.analysis-col{max-width:100%;flex:1 1 auto;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="budget-note">Total policy emphasis is fixed at 100 percent, shared across all three objectives.</p>
+
+  <div class="content-row">
+    <div class="sliders-col">
+      <!-- Local Content Growth -->
+      <div class="row" style="--c:var(--purple)">
+        <div class="icon-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="8" width="10" height="8"/>
+            <path d="M11 12h6l3 4v0h-9z"/>
+            <circle cx="6" cy="18" r="2"/>
+            <circle cx="16" cy="18" r="2"/>
+          </svg>
+        </div>
+        <div class="row-main">
+          <div class="row-top">
+            <span class="row-label">Local Content Growth</span>
+            <span class="row-value" id="val-local">34%</span>
+          </div>
+          <input type="range" min="0" max="100" value="34" id="slider-local" style="--c:var(--purple)">
+        </div>
+      </div>
+
+      <!-- FDI Attraction -->
+      <div class="row" style="--c:var(--navy)">
+        <div class="icon-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <ellipse cx="12" cy="12" rx="9" ry="4"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="12" y1="3" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div class="row-main">
+          <div class="row-top">
+            <span class="row-label">FDI Attraction</span>
+            <span class="row-value" id="val-fdi">33%</span>
+          </div>
+          <input type="range" min="0" max="100" value="33" id="slider-fdi" style="--c:var(--navy)">
+        </div>
+      </div>
+
+      <!-- Fiscal Revenue -->
+      <div class="row" style="--c:var(--teal)">
+        <div class="icon-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 8l10-5 10 5"/>
+            <line x1="4" y1="8" x2="4" y2="17"/>
+            <line x1="9" y1="8" x2="9" y2="17"/>
+            <line x1="15" y1="8" x2="15" y2="17"/>
+            <line x1="20" y1="8" x2="20" y2="17"/>
+            <line x1="2" y1="17" x2="22" y2="17"/>
+            <line x1="1" y1="20" x2="23" y2="20"/>
+          </svg>
+        </div>
+        <div class="row-main">
+          <div class="row-top">
+            <span class="row-label">Fiscal Revenue</span>
+            <span class="row-value" id="val-fiscal">33%</span>
+          </div>
+          <input type="range" min="0" max="100" value="33" id="slider-fiscal" style="--c:var(--teal)">
+        </div>
+      </div>
+    </div>
+
+    <div class="analysis-col">
+      <div class="feedback" id="feedback" style="--fc:#5c3a78">
+        Drag a slider to see the trade-off play out.
+      </div>
+    </div>
+  </div>
+
+  <div class="triangle-area">
+    <svg id="triangle-svg" viewBox="0 0 620 320" width="620" height="320" style="max-width:100%;height:auto;">
+      <line id="line-lp-fdi" x1="0" y1="0" x2="0" y2="0" stroke="#5c3a78" stroke-width="2" stroke-dasharray="2 6"/>
+      <line id="line-fdi-fis" x1="0" y1="0" x2="0" y2="0" stroke="#345169" stroke-width="2" stroke-dasharray="2 6"/>
+      <line id="line-lp-fis" x1="0" y1="0" x2="0" y2="0" stroke="#155c46" stroke-width="2" stroke-dasharray="2 6"/>
+      <circle id="node-local" cx="200" cy="75" r="20" fill="none" stroke="#5c3a78" stroke-width="2.5"/>
+      <circle id="node-fdi" cx="380" cy="75" r="20" fill="none" stroke="#345169" stroke-width="2.5"/>
+      <circle id="node-fiscal" cx="290" cy="235" r="20" fill="none" stroke="#155c46" stroke-width="2.5"/>
+      <text id="label-local" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#5c3a78" text-anchor="end" dominant-baseline="middle">Local Content</text>
+      <text id="label-fdi" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#345169" text-anchor="start" dominant-baseline="middle">FDI Attraction</text>
+      <text id="label-fiscal" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#155c46" text-anchor="middle" dominant-baseline="hanging">Fiscal Revenue</text>
+    </svg>
+  </div>
+
+  <button class="reset-btn" id="reset">Reset to balanced (34% / 33% / 33%)</button>
+</div>
+
+<script>
+(function(){
+  const sliders = {
+    local: document.getElementById('slider-local'),
+    fdi: document.getElementById('slider-fdi'),
+    fiscal: document.getElementById('slider-fiscal')
+  };
+  const vals = {
+    local: document.getElementById('val-local'),
+    fdi: document.getElementById('val-fdi'),
+    fiscal: document.getElementById('val-fiscal')
+  };
+  const nodes = {
+    local: document.getElementById('node-local'),
+    fdi: document.getElementById('node-fdi'),
+    fiscal: document.getElementById('node-fiscal')
+  };
+  const lineLpFdi = document.getElementById('line-lp-fdi');
+  const lineFdiFis = document.getElementById('line-fdi-fis');
+  const lineLpFis = document.getElementById('line-lp-fis');
+  const labels = {
+    local: document.getElementById('label-local'),
+    fdi: document.getElementById('label-fdi'),
+    fiscal: document.getElementById('label-fiscal')
+  };
+  const feedback = document.getElementById('feedback');
+
+  let state = { local: 34, fdi: 33, fiscal: 33 };
+
+  const basePos = {
+    local:  {x:200, y:75},
+    fdi:    {x:380, y:75},
+    fiscal: {x:290, y:235}
+  };
+  const labelGap = 16;
+
+  function rebalance(changedKey, newVal){
+    newVal = Math.max(0, Math.min(100, newVal));
+    const otherKeys = Object.keys(state).filter(k => k !== changedKey);
+    const remaining = 100 - newVal;
+    const otherSum = state[otherKeys[0]] + state[otherKeys[1]];
+
+    let a, b;
+    if (otherSum <= 0) {
+      a = remaining / 2;
+      b = remaining / 2;
+    } else {
+      a = remaining * (state[otherKeys[0]] / otherSum);
+      b = remaining * (state[otherKeys[1]] / otherSum);
+    }
+    state[changedKey] = newVal;
+    state[otherKeys[0]] = a;
+    state[otherKeys[1]] = b;
+  }
+
+  function render(){
+    // round for display, adjust rounding drift onto the largest value
+    const keys = Object.keys(state);
+    let rounded = {};
+    keys.forEach(k => rounded[k] = Math.round(state[k]));
+    let diff = 100 - (rounded.local + rounded.fdi + rounded.fiscal);
+    if (diff !== 0){
+      const maxKey = keys.reduce((a,b) => state[a] > state[b] ? a : b);
+      rounded[maxKey] += diff;
+    }
+
+    sliders.local.value = rounded.local;
+    sliders.fdi.value = rounded.fdi;
+    sliders.fiscal.value = rounded.fiscal;
+    vals.local.textContent = rounded.local + '%';
+    vals.fdi.textContent = rounded.fdi + '%';
+    vals.fiscal.textContent = rounded.fiscal + '%';
+
+    // scale node radius 12-40 based on value (0-100)
+    const radii = {};
+    keys.forEach(k => {
+      const r = 12 + (rounded[k]/100) * 28;
+      radii[k] = r;
+      nodes[k].setAttribute('r', r.toFixed(1));
+    });
+
+    // position labels off to the side of each ball, following its current radius
+    labels.local.setAttribute('x', basePos.local.x - radii.local - labelGap);
+    labels.local.setAttribute('y', basePos.local.y);
+
+    labels.fdi.setAttribute('x', basePos.fdi.x + radii.fdi + labelGap);
+    labels.fdi.setAttribute('y', basePos.fdi.y);
+
+    labels.fiscal.setAttribute('x', basePos.fiscal.x);
+    labels.fiscal.setAttribute('y', basePos.fiscal.y + radii.fiscal + labelGap);
+
+    // update connecting lines to touch circle edges roughly (simple center-to-center is fine visually)
+    lineLpFdi.setAttribute('x1', basePos.local.x); lineLpFdi.setAttribute('y1', basePos.local.y);
+    lineLpFdi.setAttribute('x2', basePos.fdi.x);   lineLpFdi.setAttribute('y2', basePos.fdi.y);
+
+    lineFdiFis.setAttribute('x1', basePos.fdi.x);    lineFdiFis.setAttribute('y1', basePos.fdi.y);
+    lineFdiFis.setAttribute('x2', basePos.fiscal.x); lineFdiFis.setAttribute('y2', basePos.fiscal.y);
+
+    lineLpFis.setAttribute('x1', basePos.local.x);  lineLpFis.setAttribute('y1', basePos.local.y);
+    lineLpFis.setAttribute('x2', basePos.fiscal.x); lineLpFis.setAttribute('y2', basePos.fiscal.y);
+
+    updateFeedback(rounded);
+  }
+
+  function updateFeedback(v){
+    const entries = Object.entries(v).sort((a,b) => b[1]-a[1]);
+    const [topKey, topVal] = entries[0];
+    const [botKey, botVal] = entries[2];
+    const spread = topVal - botVal;
+
+    const names = {
+      local: 'Local Content Growth',
+      fdi: 'FDI Attraction',
+      fiscal: 'Fiscal Revenue'
+    };
+    const colors = {
+      local: '#5c3a78',
+      fdi: '#345169',
+      fiscal: '#155c46'
+    };
+
+    let msg = '';
+    let color = colors[topKey];
+
+    if (spread < 14) {
+      color = '#555';
+      msg = `<strong>A balanced allocation.</strong> No single objective dominates, which mirrors a phased, realistic approach &mdash; but it also means no objective gets pushed hard enough to see fast results.`;
+    } else if (topKey === 'local') {
+      msg = `<strong>${names.local} is prioritized (${topVal}%).</strong> Heavy local content mandates can secure domestic value retention, but they raise operational costs for companies &mdash; risking lower ${names.fdi.toLowerCase()} (now ${v.fdi}%) and shrinking the ${names.fiscal.toLowerCase()} base (now ${v.fiscal}%) if firms become less profitable or invest elsewhere.`;
+    } else if (topKey === 'fdi') {
+      msg = `<strong>${names.fdi} is prioritized (${topVal}%).</strong> Loosening local content requirements to keep the country attractive to investors can bring in capital, but it leaves less pressure on companies to build domestic supply chains &mdash; ${names.local.toLowerCase()} falls to ${v.local}% and near-term ${names.fiscal.toLowerCase()} gains (${v.fiscal}%) may not translate into lasting local capability.`;
+    } else {
+      msg = `<strong>${names.fiscal} is prioritized (${topVal}%).</strong> Squeezing maximum tax and royalty revenue in the short term can strain company margins, discouraging both ${names.local.toLowerCase()} (${v.local}%) investment and new ${names.fdi.toLowerCase()} (${v.fdi}%) into the sector over time.`;
+    }
+
+    feedback.innerHTML = msg;
+    feedback.style.setProperty('--fc', color);
+  }
+
+  function onSliderInput(key){
+    return function(e){
+      rebalance(key, parseFloat(e.target.value));
+      render();
+    };
+  }
+
+  sliders.local.addEventListener('input', onSliderInput('local'));
+  sliders.fdi.addEventListener('input', onSliderInput('fdi'));
+  sliders.fiscal.addEventListener('input', onSliderInput('fiscal'));
+
+  document.getElementById('reset').addEventListener('click', function(){
+    state = { local: 34, fdi: 33, fiscal: 33 };
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
