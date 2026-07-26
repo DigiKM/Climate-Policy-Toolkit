@@ -130,7 +130,10 @@
     line-height:1.55;
     color:var(--ink);
     transition:border-color .25s ease;
-    min-height:64px;
+    height:200px;
+    width:92%;
+    margin:0 auto;
+    overflow-y:auto;
   }
   .feedback strong{color:var(--fc,#888);}
   .reset-btn{
@@ -357,6 +360,11 @@
       fdi: 'FDI Attraction',
       fiscal: 'Fiscal Revenue'
     };
+    const lowerNames = {
+      local: 'local content growth',
+      fdi: 'FDI attraction',
+      fiscal: 'fiscal revenue'
+    };
     const colors = {
       local: '#5c3a78',
       fdi: '#345169',
@@ -370,11 +378,11 @@
       color = '#555';
       msg = `<strong>A balanced allocation.</strong> No single objective dominates, which mirrors a phased, realistic approach &mdash; but it also means no objective gets pushed hard enough to see fast results.`;
     } else if (topKey === 'local') {
-      msg = `<strong>${names.local} is prioritized (${topVal}%).</strong> Heavy local content mandates can secure domestic value retention, but they raise operational costs for companies &mdash; risking lower ${names.fdi.toLowerCase()} (now ${v.fdi}%) and shrinking the ${names.fiscal.toLowerCase()} base (now ${v.fiscal}%) if firms become less profitable or invest elsewhere.`;
+      msg = `<strong>${names.local} is prioritized (${topVal}%).</strong> Heavy local content mandates can secure domestic value retention, but they raise operational costs for companies &mdash; risking lower ${lowerNames.fdi} (now ${v.fdi}%) and shrinking the ${lowerNames.fiscal} base (now ${v.fiscal}%) if firms become less profitable or invest elsewhere.`;
     } else if (topKey === 'fdi') {
-      msg = `<strong>${names.fdi} is prioritized (${topVal}%).</strong> Loosening local content requirements to keep the country attractive to investors can bring in capital, but it leaves less pressure on companies to build domestic supply chains &mdash; ${names.local.toLowerCase()} falls to ${v.local}% and near-term ${names.fiscal.toLowerCase()} gains (${v.fiscal}%) may not translate into lasting local capability.`;
+      msg = `<strong>${names.fdi} is prioritized (${topVal}%).</strong> Loosening local content requirements to keep the country attractive to investors can bring in capital, but it leaves less pressure on companies to build domestic supply chains &mdash; ${lowerNames.local} falls to ${v.local}% and near-term ${lowerNames.fiscal} gains (${v.fiscal}%) may not translate into lasting local capability.`;
     } else {
-      msg = `<strong>${names.fiscal} is prioritized (${topVal}%).</strong> Squeezing maximum tax and royalty revenue in the short term can strain company margins, discouraging both ${names.local.toLowerCase()} (${v.local}%) investment and new ${names.fdi.toLowerCase()} (${v.fdi}%) into the sector over time.`;
+      msg = `<strong>${names.fiscal} is prioritized (${topVal}%).</strong> Squeezing maximum tax and royalty revenue in the short term can strain company margins, discouraging both ${lowerNames.local} (${v.local}%) investment and new ${lowerNames.fdi} (${v.fdi}%) into the sector over time.`;
     }
 
     feedback.innerHTML = msg;
