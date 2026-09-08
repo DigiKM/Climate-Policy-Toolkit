@@ -197,7 +197,6 @@ select {
       
       <div class="card" style="width: 320px; flex: 0 0 320px; margin-bottom: 0;">
         <label class="section-header">SELECT OTHER POLICY INSTRUMENT</label>
-        <!-- The container for the static policy list -->
         <div id="policyListContainer"></div>
       </div>
     </div>
@@ -269,7 +268,6 @@ const countries = {
   Argentina:  {climate:5.8, social:5.2, transition:6.9, focus:"Macro-financial transition risks"}
 };
 
-// Data source for the new stacked button list
 const policyDefinitions = [
   {id: "energy", label: "Energy pricing reform"},
   {id: "transport", label: "Transport electrification"},
@@ -400,7 +398,6 @@ function selectPolicy(id) {
   renderAll();
 }
 
-// Renders the list in a static order, only moving the visual highlight
 function renderPolicyList() {
   const container = document.getElementById("policyListContainer");
   container.innerHTML = policyDefinitions.map(p => {
@@ -437,8 +434,15 @@ function renderAll() {
   b.textContent = burden.label + "*";
   b.className = "badge " + burden.cls;
   
+  // Count exactly how many scores hit the 6.5 threshold for this specific country
+  const highScores = [s.climate, s.social, s.transition].filter(v => v >= 6.5).length;
+  
   if (burden.label === "Moderate risk") {
-    document.getElementById("burdenFootnote").innerText = `*${displayC} has scored higher than 6.5 on one index.`;
+    if (highScores === 0) {
+      document.getElementById("burdenFootnote").innerText = `*${displayC} did not score 6.5 or higher on any index.`;
+    } else {
+      document.getElementById("burdenFootnote").innerText = `*${displayC} scored 6.5 or higher on only one index.`;
+    }
   } else {
     document.getElementById("burdenFootnote").innerText = `*${displayC} scores 6.5 or higher on ${burden.indexCount} indices.`;
   }
@@ -482,7 +486,6 @@ function renderAll() {
     </div>`;
 }
 
-// Initial render
 renderPolicyList();
 renderAll();
 </script>
