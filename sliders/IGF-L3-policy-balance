@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Policy Balancing Act</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styling for a cleaner slider track and thumb */
+        input[type=range] {
+            -webkit-appearance: none; 
+            appearance: none;
+            background: transparent; 
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #4f46e5;
+            cursor: pointer;
+            margin-top: -8px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: transform 0.1s;
+        }
+        input[type=range]::-webkit-slider-thumb:active {
+            transform: scale(1.1);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: #e5e7eb;
+            border-radius: 4px;
+        }
+        /* Firefox styles */
+        input[type=range]::-moz-range-thumb {
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #4f46e5;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        input[type=range]::-moz-range-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: #e5e7eb;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4 font-sans text-gray-800">
+
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 max-w-2xl w-full p-6 sm:p-10">
+        
+        <div class="mb-8 text-center">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Policy Balancing Act</h2>
+            <p class="text-gray-600 text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
+                Move the slider to see what happens to FDI or Tax revenues when you have too little, balanced or too much Local Content requirements.
+            </p>
+        </div>
+
+        <div class="mb-12 relative px-4">
+            <input type="range" min="1" max="3" step="1" value="2" id="lcr-slider" class="w-full relative z-10 focus:outline-none">
+            
+            <div class="flex justify-between text-xs sm:text-sm font-semibold text-gray-500 mt-4 px-1">
+                <span class="w-1/3 text-left">Too Little</span>
+                <span class="w-1/3 text-center text-indigo-600 font-bold" id="label-balanced">Balanced</span>
+                <span class="w-1/3 text-right">Too Much</span>
+            </div>
+        </div>
+
+        <div class="flex justify-center items-end gap-6 sm:gap-12 h-64 mt-8 bg-gray-50 rounded-xl p-4 sm:p-6 border border-gray-100">
+            
+            <!-- FDI Column -->
+            <div class="flex flex-col items-center w-1/2 max-w-[200px]">
+                <h3 class="font-bold text-blue-600 mb-4 text-center text-sm sm:text-base h-10 flex items-center">Foreign Direct Investment (FDI)</h3>
+                <div class="w-16 sm:w-24 h-32 bg-gray-200 rounded-t-lg relative flex items-end overflow-hidden shadow-inner">
+                    <div id="fdi-bar" class="w-full bg-blue-500 transition-all duration-500 ease-out" style="height: 60%;"></div>
+                </div>
+                <div class="mt-4 h-12 flex items-start justify-center">
+                    <p id="fdi-text" class="text-sm font-medium text-center text-gray-700 leading-tight">Sustainable</p>
+                </div>
+            </div>
+
+            <!-- Tax Revenue Column -->
+            <div class="flex flex-col items-center w-1/2 max-w-[200px]">
+                <h3 class="font-bold text-emerald-600 mb-4 text-center text-sm sm:text-base h-10 flex items-center">Tax Revenues</h3>
+                <div class="w-16 sm:w-24 h-32 bg-gray-200 rounded-t-lg relative flex items-end overflow-hidden shadow-inner">
+                    <div id="tax-bar" class="w-full bg-emerald-500 transition-all duration-500 ease-out" style="height: 100%;"></div>
+                </div>
+                <div class="mt-4 h-12 flex items-start justify-center">
+                    <p id="tax-text" class="text-sm font-medium text-center text-gray-700 leading-tight">Optimal - Maximized benefit</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slider = document.getElementById('lcr-slider');
+            const fdiBar = document.getElementById('fdi-bar');
+            const fdiText = document.getElementById('fdi-text');
+            const taxBar = document.getElementById('tax-bar');
+            const taxText = document.getElementById('tax-text');
+            const labelBalanced = document.getElementById('label-balanced');
+
+            // Data configuration for the 3 states
+            const states = {
+                1: { // Too Little
+                    fdiHeight: '100%', 
+                    fdiLabel: 'High - Easy to attract', 
+                    taxHeight: '20%', 
+                    taxLabel: 'Low - Missing out on potential',
+                    fdiColor: 'bg-blue-400',
+                    taxColor: 'bg-emerald-300'
+                },
+                2: { // Balanced
+                    fdiHeight: '60%', 
+                    fdiLabel: 'Sustainable', 
+                    taxHeight: '100%', 
+                    taxLabel: 'Optimal - Maximized benefit',
+                    fdiColor: 'bg-blue-500',
+                    taxColor: 'bg-emerald-500'
+                },
+                3: { // Too Much
+                    fdiHeight: '20%', 
+                    fdiLabel: 'Deterred - Burden too high', 
+                    taxHeight: '20%', 
+                    taxLabel: 'Low - Sacrificed due to lost investment',
+                    fdiColor: 'bg-blue-300',
+                    taxColor: 'bg-emerald-300'
+                }
+            };
+
+            // Function to update the UI based on slider value
+            function updateUI(value) {
+                const state = states[value];
+                
+                // Update heights
+                fdiBar.style.height = state.fdiHeight;
+                taxBar.style.height = state.taxHeight;
+                
+                // Update text
+                fdiText.textContent = state.fdiLabel;
+                taxText.textContent = state.taxLabel;
+
+                // Update colors (optional visual feedback)
+                fdiBar.className = `w-full transition-all duration-500 ease-out ${state.fdiColor}`;
+                taxBar.className = `w-full transition-all duration-500 ease-out ${state.taxColor}`;
+
+                // Highlight the balanced label if we are on step 2
+                if (value === '2') {
+                    labelBalanced.classList.add('text-indigo-600', 'font-bold');
+                    labelBalanced.classList.remove('text-gray-500');
+                } else {
+                    labelBalanced.classList.remove('text-indigo-600', 'font-bold');
+                    labelBalanced.classList.add('text-gray-500');
+                }
+            }
+
+            // Listen for slider movement
+            slider.addEventListener('input', (e) => {
+                updateUI(e.target.value);
+            });
+            
+            // Initialize with default value
+            updateUI(slider.value);
+        });
+    </script>
+</body>
+</html>
