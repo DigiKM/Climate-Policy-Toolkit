@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>LAC Regional Climate Policy Toolkit - Inclusive by Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+html, body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  background-color: #f0f4f8 !important; 
+  color: #0f172a !important; 
+  margin: 0;
+  padding: 0;
+}
+* { box-sizing: border-box; }
+
+.page-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+}
+
+.left-column {
+  width: 340px;
+  flex: 0 0 340px;
+  padding: 20px;
+}
+
+.right-column {
+  flex: 1;
+  min-width: 0;
+  padding: 20px 20px 20px 0;
+}
+
+.card {
+  background-color: #ffffff !important; 
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.section-header {
+  font-size: 15px;
+  font-weight: 500;
+  color: #475569;
+  text-transform: uppercase;
+  margin: 0 0 12px 0;
+  display: block;
+}
+
+.pill-grid { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+.pill { background-color: #f8fafc !important; border-radius: 6px; padding: 12px 16px; border: 1px solid #e2e8f0; }
+.bar-track { height: 8px; background-color: #cbd5e1; border-radius: 4px; overflow: hidden; margin-top: 8px; width: 100%; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+
+.mlabel { font-size: 14px; color: #334155; margin-bottom: 0; }
+.mval { font-size: 21px; font-weight: 500; color: #0f172a; line-height: 1; }
+.badge { display: inline-block; font-size: 13px; font-weight: 500; padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
+.focus-tag { font-size: 14px; font-weight: 500; padding: 4px 12px; border-radius: 6px; background: rgba(115, 90, 37, 0.15); color: #5f4a1c; white-space: nowrap; }
+
+.burden-triple { background-color: #fcebeb !important; color: #791f1f !important; border: 1px solid #791f1f; }
+.burden-double { background-color: #faeeda !important; color: #633806 !important; border: 1px solid #633806; }
+.burden-single { background-color: #eaf3de !important; color: #27500a !important; border: 1px solid #27500a; }
+
+
+.tab-strip { display: flex; border-bottom: 1px solid #cbd5e1; margin-bottom: 16px; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; gap: 4px; }
+.tab { font-size: 13px; font-weight: 500; padding: 10px 10px; cursor: pointer; color: #475569; border-bottom: 2px solid transparent; margin-bottom: -1px; background: none; border-top: none; border-left: none; border-right: none; font-family: 'Roboto', sans-serif; transition: all 0.2s ease; white-space: nowrap; }
+.tab:hover { color: #1d4ed8; background-color: #f1f5f9; border-radius: 4px 4px 0 0; }
+.tab.active { color: #0f172a; border-bottom: 2px solid #1d4ed8; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.rec-item { display: flex; gap: 8px; padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-size: 15px; color: #334155; line-height: 1.6; }
+.rec-item:last-child { border-bottom: none; }
+.rec-num { font-size: 13px; font-weight: 500; color: #475569; min-width: 22px; padding-top: 2px; }
+
+.case-card { background-color: #f8fafc !important; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; margin-bottom: 10px; }
+.case-title { font-size: 15px; font-weight: 500; color: #0f172a; margin: 0 0 6px; }
+.case-body { font-size: 14px; color: #334155; line-height: 1.6; margin: 0; }
+
+.brief-section { margin-bottom: 24px; }
+.brief-section-title { font-size: 16px; font-weight: 500; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; border-left: 3px solid #1d4ed8; padding-left: 10px; }
+.brief-body-text { font-size: 15px; color: #334155; line-height: 1.7; margin: 0; }
+
+select {
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 15px;
+  padding: 6px;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  border: 1px solid #94a3b8;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+@media print {
+  body * { display: none !important; }
+  #tab-brief, #tab-brief * { display: block !important; position: relative !important; background-color: white !important; color: black !important; }
+  .brief-section-title { color: black !important; border-left-color: black !important; }
+  .brief-body-text { color: black !important; }
+}
+
+@media (max-width: 1100px) {
+  .page-layout { flex-direction: column; }
+  .left-column, .right-column { width: 100%; flex: 1 1 auto; padding: 20px; }
+}
+</style>
+</head>
+
+<body>
+<div class="page-layout">
+  <div class="left-column">
+    
+    <div class="card">
+      <label class="section-header">SELECT MEMBER STATE</label>
+      <select id="countrySelect" onchange="updateCountry()">
+        <option value="Brazil" selected>Brazil</option>
+        <option value="Colombia">Colombia</option>
+        <option value="Mexico">Mexico</option>
+        <option value="Costa Rica">Costa Rica</option>
+        <option value="Chile">Chile</option>
+        <option value="Ecuador">Ecuador</option>
+        <option value="Peru">Peru</option>
+        <option value="Argentina">Argentina</option>
+      </select>
+    </div>
+
+    <div class="card">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+        <label class="section-header" style="margin-bottom: 0;">COUNTRY RISK PROFILE</label>
+        <span class="badge" id="burdenBadge"></span>
+      </div>
+      <div class="pill-grid" id="pillGrid"></div>
+      <div id="burdenFootnote" style="font-size: 13px; color: #475569; margin-top: 12px; font-style: italic;"></div>
+    </div>
+    
+  </div>
+
+  <div class="right-column">
+    
+    <div class="card">
+      <p style="font-size: 15px; color: #334155; line-height: 1.7; margin: 0;" id="summaryContainer"></p>
+    </div>
+
+    <div class="card">
+      <div class="tab-strip">
+        <button class="tab active" onclick="switchTab('recs',this)">RECOMMENDED ACTIONS</button>
+        <button class="tab" onclick="switchTab('cases',this)">CASE STUDIES</button>
+        <button class="tab" onclick="switchTab('brief',this)" style="color: #735A25;">COUNTRY BRIEF</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-recs">
+        <div id="recContent"></div>
+      </div>
+
+      <div class="tab-panel" id="tab-cases">
+        <div id="caseContent"></div>
+      </div>
+
+      <div class="tab-panel" id="tab-brief">
+        <div class="brief-section">
+          <div class="brief-section-title">Executive Summary</div>
+          <p class="brief-body-text" id="bExecSummary"></p>
+        </div>
+
+        <div class="brief-section">
+          <div class="brief-section-title">Policy Context</div>
+          <p class="brief-body-text" id="bPolicyContext"></p>
+        </div>
+
+        <div class="brief-section">
+          <div class="brief-section-title">Priority Equity Actions</div>
+          <p class="brief-body-text" id="bActions"></p>
+        </div>
+
+        <div class="brief-section">
+          <div class="brief-section-title">Implementation Plan</div>
+          <p class="brief-body-text" id="bPlan"></p>
+        </div>
+
+        <div class="brief-section">
+          <div class="brief-section-title">Monitoring Indicators</div>
+          <p class="brief-body-text" id="bIndicators"></p>
+        </div>
+
+        <div class="brief-section">
+          <div class="brief-section-title">Relevant Cases in Other Countries</div>
+          <div class="brief-body-text" id="bCases"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const countries = {
+  Brazil:     {climate:6.3, social:5.5, transition:5.0, focus:"Just transition & workforce reskilling"},
+  Colombia:   {climate:8.5, social:6.8, transition:5.4, focus:"Hydropower resilience & energy poverty"},
+  Mexico:     {climate:7.1, social:6.2, transition:6.5, focus:"Smallholder agricultural adaptation"},
+  Costa_Rica: {climate:4.5, social:3.2, transition:5.8, focus:"1.5°C compatible decarbonization"},
+  Chile:      {climate:5.2, social:3.0, transition:7.2, focus:"Critical minerals & clean transport"},
+  Ecuador:    {climate:6.8, social:7.0, transition:5.5, focus:"Equitable fuel subsidy reform"},
+  Peru:       {climate:7.4, social:6.9, transition:5.6, focus:"Disaster shock protection"},
+  Argentina:  {climate:5.8, social:5.2, transition:6.9, focus:"Macro-financial transition risks"}
+};
+
+const recommendations = {
+  Brazil: [
+    "Implement progressive electricity tariffs and targeted subsidies to protect low-income urban and biomass-reliant rural households from rising energy costs.",
+    "Launch mandatory green technical upskilling and transitional income bridges for fossil-extraction and heavy-manufacturing workers aged 45+.",
+    "Direct emergency adaptation funds to flood-prone urban zones and scale up women-led agroforestry networks across Amazonian border regions."
+  ],
+  Colombia: [
+    "Accelerate utility-scale solar and wind diversification to reduce systemic exposure to hydropower generation drops during drought.",
+    "Ring-fence subsidies and rural electrification investment to protect displaced and low-income populations from energy poverty.",
+    "Sequence coal phase-down in La Guajira and Cesar with funded reskilling and regional economic development plans."
+  ],
+  Mexico: [
+    "Maintain targeted lifeline tariffs and expand climate-contingent crop insurance for heat-exposed and drought-vulnerable smallholders.",
+    "Scale up gender-sensitive coastal wetland restoration (chinampa models) in Gulf of Mexico communities.",
+    "Partner with manufacturing and automotive clusters on reskilling programmes to cushion displaced agricultural and industrial labour."
+  ],
+  Costa_Rica: [
+    "Sustain 1.5°C-aligned climate leadership while securing international finance to offset domestic transition inequities.",
+    "Expand advanced technical academies into coastal provinces to close the green-skills gap facing low-skilled rural workers.",
+    "Channel ecosystem service payments (PSA) directly to Indigenous custodians of critical biodiversity watersheds."
+  ],
+  Chile: [
+    "Establish Just Transition agreements with mining unions ahead of automation to shield northern mining towns from stranded-asset risk.",
+    "Expand water-efficiency and desalination investment in drought-stricken central valleys, with strict glacier protection protocols.",
+    "Balance rising global demand for copper and lithium with local ecological protection and Indigenous land rights."
+  ],
+  Ecuador: [
+    "Replace blanket fuel subsidies with targeted digital cash transfers, sequencing reform with visible social compensation to avoid backlash.",
+    "Direct international loss-and-damage finance to coastal communities affected by El Niño flooding and equip Indigenous patrols to counter deforestation.",
+    "Sequence Amazonian oil-extraction phase-downs with guaranteed local economic alternatives and vocational reskilling."
+  ],
+  Peru: [
+    "Implement integrated watershed management and shock-responsive social protection triggered by El Niño disaster thresholds.",
+    "Launch retraining for workers in vulnerable artisanal and formal mining clusters alongside extension services for smallholders shifting to drought-resistant crops.",
+    "Protect labour-intensive export sectors while recycling green-tax revenue into nutrition and health safety nets for extreme-poor households."
+  ],
+  Argentina: [
+    "Rationalize energy subsidies gradually while maintaining strict safety nets for low-income urban households.",
+    "Sequence Vaca Muerta and conventional oil-field labour transitions with funded regional development and bipartite green-skills councils.",
+    "Strengthen agricultural drought insurance and flood defenses across vulnerable Paraná river basin provinces."
+  ]
+};
+
+const caseStudies = {
+  Brazil: ["Amazon Reforestation & Women","Women-led reforestation networks in Virunga and Central Africa demonstrate how nature-based solutions generate livelihoods while protecting carbon sinks — a direct operational parallel for Amazon transition strategies.","Hydropower Drought Vulnerability","Colombia's reliance on hydropower (62%) illustrates how drought-driven generation shortfalls cascade into energy poverty, reflecting Brazil's identical hydro-generation exposure."],
+  Colombia: ["Hydropower Dependence","Relying on hydropower for over 60% of electricity exposes national grids to severe climate variability. Prolonged droughts diminish reservoir volumes, requiring urgent solar and wind diversification.","Pakistan Flooding Analogy","Pakistan's 2023 floods (affecting 33 million people) illustrate the compounding threat of extreme hydrometeorological events on populations where poverty limits recovery capacity."],
+  Mexico: ["Gulf of Mexico Coastal Wetlands","A landmark gender-sensitive adaptation project integrating stilt housing, chinampas, and women-led rainwater harvesting enterprises (Gotita de Agua) to build community resilience.","Veracruz Coffee Stressors","Rising temperatures and erratic rainfall in Coatepec and Fortín threaten smallholder yields and exacerbate coffee leaf rust outbreaks, endangering 86,000 family livelihoods."],
+  Costa_Rica: ["1.5°C Compatible Leadership","One of only eight economies globally aligned with 1.5°C NDC pathways. Sustaining this leadership requires international climate finance to offset domestic transition inequities.","Green Workforce Gaps","Despite robust net-zero targets, highly educated urban workers capture emerging green opportunities while low-skilled rural workers face structural placement barriers."],
+  Chile: ["Santiago Fuel Switching","Historical air quality and environmental policies driving urban fuel switching to natural gas demonstrate the critical need to manage price trade-offs for commercial fleets.","Critical Transition Minerals","As a major supplier of copper and lithium, national value chains must balance surging global clean-tech demand with local ecological protection and Indigenous land rights."],
+  Ecuador: ["Fuel Subsidy Backlash","Attempts to remove transport fuel subsidies triggered nationwide protests by Indigenous groups and low-income communities, forcing policy reversals to maintain social stability.","Gilets Jaunes Precedent","France's 2018 yellow vest protests against regressive carbon taxes on diesel underscore the universal requirement to sequence social compensation before price enforcement."],
+  Peru: ["Disaster Driven Poverty","Regional economic literature demonstrates that experiencing just one additional climate disaster per year is linked to a 16–23% surge in local poverty rates.","Andean Glacial Retreat","Compounding heat anomalies threaten mountain water storage, directly jeopardizing downstream agricultural productivity and municipal water grids."],
+  Argentina: ["Macro-Financial Transition","Economic decarbonization models indicate that uncoordinated transition policies risk stranding regional industrial assets and straining fiscal debt service capacities.","Coal Phase-Out Protests","European precedents in Germany and Poland demonstrate that sequencing regional economic diversification and worker buyouts is the determinant of transition acceptance."]
+};
+
+function getBurden(s) {
+  const h = [s.climate, s.social, s.transition].filter(v => v >= 6.5).length;
+  if (h === 3) return {label:"Triple burden", cls:"burden-triple", indexCount: "all three"};
+  if (h === 2) return {label:"Double burden", cls:"burden-double", indexCount: "two of the three"};
+  return {label:"Moderate risk", cls:"burden-single", indexCount: "one or fewer"};
+}
+
+function barColor(v){ return v >= 7.5 ? "#C53030" : v >= 5.5 ? "#C05621" : "#2F855A"; }
+
+let currentCountry = "Brazil";
+
+function switchTab(id, btn) {
+  document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  document.getElementById("tab-" + id).classList.add("active");
+  btn.classList.add("active");
+}
+
+function updateCountry() {
+  currentCountry = document.getElementById("countrySelect").value;
+  renderAll();
+}
+
+function renderAll() {
+  const rawC = currentCountry;
+  const c = rawC === "Costa Rica" ? "Costa_Rica" : rawC;
+  const displayC = rawC;
+  const s = countries[c];
+
+  document.getElementById("pillGrid").innerHTML = [
+    {label:"Climate exposure", val:s.climate},
+    {label:"Social vulnerability", val:s.social},
+    {label:"Worker transition", val:s.transition}
+  ].map(d => `<div class="pill">
+      <div style="display:flex; justify-content:space-between; align-items:end;">
+          <div class="mlabel">${d.label}</div>
+          <div class="mval">${d.val.toFixed(1)}<span style="font-size:12px;color:#475569">/10</span></div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" style="width:${d.val * 10}%;background:${barColor(d.val)}"></div></div>
+  </div>`).join("");
+
+  const burden = getBurden(s);
+  const b = document.getElementById("burdenBadge");
+  b.textContent = burden.label + "*";
+  b.className = "badge " + burden.cls;
+  
+  // Count exactly how many scores hit the 6.5 threshold for this specific country
+  const highScores = [s.climate, s.social, s.transition].filter(v => v >= 6.5).length;
+  
+  if (burden.label === "Moderate risk") {
+    if (highScores === 0) {
+      document.getElementById("burdenFootnote").innerText = `*${displayC} did not score 6.5 or higher on any index.`;
+    } else {
+      document.getElementById("burdenFootnote").innerText = `*${displayC} scored 6.5 or higher on only one index.`;
+    }
+  } else {
+    document.getElementById("burdenFootnote").innerText = `*${displayC} scores 6.5 or higher on ${burden.indexCount} indices.`;
+  }
+
+  document.getElementById("summaryContainer").innerHTML = `<strong>Country summary:</strong> <span class="focus-tag">${s.focus}</span> is the biggest equity challenge area for ${displayC} in its climate transition. The recommended actions, case studies and country brief below are drawn directly from UNESCO's "Who Bears the Costs?" report to help ensure the most vulnerable populations are not left to bear a disproportionate share of climate impacts or climate policy costs.`;
+
+  const currentRecs = recommendations[c] || [
+    "Ensure stakeholder alignment across national and regional implementation agencies.",
+    "Establish equitable monitoring frameworks prior to policy execution.",
+    "Protect vulnerable socioeconomic strata from regressive transition trade-offs."
+  ];
+  document.getElementById("recContent").innerHTML = currentRecs.map((r,i) => `<div class="rec-item"><span class="rec-num">${i+1}.</span><span>${r}</span></div>`).join("");
+
+  const cs = caseStudies[c] || ["No case study available","Add a matching case study for this country.","No case study available","Add a matching case study for this country."];
+  document.getElementById("caseContent").innerHTML = `
+    <div class="case-card"><p class="case-title">${cs[0]}</p><p class="case-body">${cs[1]}</p></div>
+    <div class="case-card"><p class="case-title">${cs[2]}</p><p class="case-body">${cs[3]}</p></div>`;
+
+  document.getElementById("bExecSummary").innerText = `This country brief synthesizes the structural equity risks and priorities identified for ${displayC} in UNESCO's "Who Bears the Costs?" report. In line with MOST Programme findings, priority interventions are targeted toward: ${s.focus}.`;
+  document.getElementById("bPolicyContext").innerText = `${displayC} exhibits an underlying physical climate exposure score of ${s.climate.toFixed(1)}/10, alongside a baseline social vulnerability profile of ${s.social.toFixed(1)}/10 and a worker transition risk matrix evaluated at ${s.transition.toFixed(1)}/10. This aggregated metric places the economy under a structural classification of "${burden.label}".`;
+  document.getElementById("bActions").innerHTML = currentRecs.map((r, i) => `<strong>Action ${i+1}:</strong> ${r}<br><br>`).join("");
+  document.getElementById("bPlan").innerText = `Operationalization mandates cross-ministerial coordination between Environment, Finance, and Social Development entities. Compensatory revenue recycling mechanisms must execute concurrently with decarbonization reforms to shield vulnerable strata from secondary inequality risks.`;
+  document.getElementById("bIndicators").innerText = `Core baseline metrics will track: 1) Real household purchasing power within the bottom two income quintiles, 2) Accessibility rates to multi-hazard early warning networks, and 3) Sectoral job retention and green technical placement rates across affected worker demographics.`;
+  document.getElementById("bCases").innerHTML = `
+    <p class="brief-body-text" style="margin-bottom: 12px;">To ensure evidence-grounded deployment, technical teams should reference these comparative precedents highlighted in the core UNESCO framework:</p>
+    <div style="margin-left: 10px; border-left: 2px dashed #94a3b8; padding-left: 14px;">
+      <p class="brief-body-text"><strong>Comparative Precedent 1: ${cs[0]}</strong><br>${cs[1]}</p><br>
+      <p class="brief-body-text"><strong>Comparative Precedent 2: ${cs[2]}</strong><br>${cs[3]}</p>
+    </div>`;
+}
+
+renderAll();
+</script>
+</body>
+</html>
