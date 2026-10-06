@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Regional Climate Policy Toolkit - Inclusive by Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+html, body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  background-color: #f0f4f8 !important; 
+  color: #0f172a !important; 
+  margin: 0;
+  padding: 0;
+}
+* { box-sizing: border-box; }
+
+.page-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+}
+
+.left-column {
+  width: 340px;
+  flex: 0 0 340px;
+  padding: 20px;
+}
+
+.right-column {
+  flex: 1;
+  min-width: 0;
+  padding: 20px 20px 20px 0;
+}
+
+.card {
+  background-color: #ffffff !important; 
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.section-header {
+  font-size: 15px;
+  font-weight: 500;
+  color: #475569;
+  text-transform: uppercase;
+  margin: 0 0 12px 0;
+  display: block;
+}
+
+.pill-grid { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+.pill { background-color: #f8fafc !important; border-radius: 6px; padding: 12px 16px; border: 1px solid #e2e8f0; }
+.bar-track { height: 8px; background-color: #cbd5e1; border-radius: 4px; overflow: hidden; margin-top: 8px; width: 100%; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+
+.mlabel { font-size: 14px; color: #334155; margin-bottom: 0; }
+.mval { font-size: 21px; font-weight: 500; color: #0f172a; line-height: 1; }
+.badge { display: inline-block; font-size: 13px; font-weight: 500; padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
+.focus-tag { font-size: 14px; font-weight: 500; padding: 4px 12px; border-radius: 6px; background: rgba(115, 90, 37, 0.15); color: #5f4a1c; white-space: nowrap; }
+
+.burden-triple { background-color: #fcebeb !important; color: #791f1f !important; border: 1px solid #791f1f; }
+.burden-double { background-color: #faeeda !important; color: #633806 !important; border: 1px solid #633806; }
+.burden-single { background-color: #eaf3de !important; color: #27500a !important; border: 1px solid #27500a; }
+.burden-low { background-color: #f1f5f9 !important; color: #334155 !important; border: 1px solid #94a3b8; }
+
+.tab-strip { display: flex; border-bottom: 1px solid #cbd5e1; margin-bottom: 16px; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; gap: 4px; }
+.tab { font-size: 13px; font-weight: 500; padding: 10px 10px; cursor: pointer; color: #475569; border-bottom: 2px solid transparent; margin-bottom: -1px; background: none; border-top: none; border-left: none; border-right: none; font-family: 'Roboto', sans-serif; transition: all 0.2s ease; white-space: nowrap; }
+.tab:hover { color: #1d4ed8; background-color: #f1f5f9; border-radius: 4px 4px 0 0; }
+.tab.active { color: #0f172a; border-bottom: 2px solid #1d4ed8; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.rec-item { padding: 12px 0; border-bottom: 1px solid #e2e8f0; font-size: 15px; color: #334155; line-height: 1.6; }
+.rec-item:last-child { border-bottom: none; }
+.rec-title { font-weight: 500; color: #0f172a; display: flex; gap: 8px; }
+.rec-sub { margin-top: 6px; padding-left: 28px; font-size: 14px; color: #475569; }
+
+.case-card { background-color: #f8fafc !important; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; margin-bottom: 10px; }
+.case-title { font-size: 15px; font-weight: 500; color: #0f172a; margin: 0 0 6px; }
+.case-body { font-size: 14px; color: #334155; line-height: 1.6; margin: 0; }
+.case-body a { color: #1d4ed8; text-decoration: none; font-weight: 500; }
+.case-body a:hover { text-decoration: underline; }
+
+.brief-section { margin-bottom: 24px; }
+.brief-section-title { font-size: 16px; font-weight: 500; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; border-left: 3px solid #1d4ed8; padding-left: 10px; }
+.brief-body-text { font-size: 15px; color: #334155; line-height: 1.7; margin: 0; }
+
+select {
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 15px;
+  padding: 6px;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  border: 1px solid #94a3b8;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+@media print {
+  body * { display: none !important; }
+  #tab-brief, #tab-brief * { display: block !important; position: relative !important; background-color: white !important; color: black !important; }
+  .brief-section-title { color: black !important; border-left-color: black !important; }
+  .brief-body-text { color: black !important; }
+}
+
+@media (max-width: 1100px) {
+  .page-layout { flex-direction: column; }
+  .left-column, .right-column { width: 100%; flex: 1 1 auto; padding: 20px; }
+}
+</style>
+</head>
+
+<body onload="initApp()">
+<div class="page-layout">
+  <div class="left-column">
+    
+    <div class="card">
+      <label class="section-header">SELECT WORLD REGION &#8628;</label>
+      <select id="regionSelect" onchange="updateRegion()">
+        <option value="LAC" selected>Latin America and the Caribbean</option>
+        <option value="Africa">Africa</option>
+        <option value="Asia">Asia</option>
+        <option value="Europe">Europe</option>
+        <option value="Oceania">Oceania</option>
+        <option value="SIDS">Small Island Developing States (SIDS)</option>
+        <option value="LDC">Least Developed Countries (LDC)</option>
+        <option value="LLDC">Landlocked Developing Countries (LLDC)</option>
+      </select>
+    </div>
+
+    <div class="card">
+      <label class="section-header">SELECT MEMBER STATE &#8628;</label>
+      <select id="countrySelect" onchange="updateCountry()">
+        <!-- Populated via JavaScript -->
+      </select>
+    </div>
+
+    <div class="card">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+        <label class="section-header" id="riskProfileHeader" style="margin-bottom: 0;">RISK PROFILE</label>
+        <span class="badge" id="burdenBadge"></span>
+      </div>
+      <div class="pill-grid" id="pillGrid"></div>
+      <div id="burdenFootnote" style="font-size: 13px; color: #475569; margin-top: 12px; font-style: italic;"></div>
+    </div>
+    
+  </div>
+
+  <div class="right-column">
+    
+    <div class="card">
+      <div style="font-size: 15px; color: #334155; line-height: 1.7; margin: 0;" id="summaryContainer"></div>
+    </div>
+
+    <div class="card">
+      <div class="tab-strip">
+        <button class="tab active" onclick="switchTab('brief',this)" style="color: #735A25;">MAIN RISKS & VULNERABILITIES</button>
+        <button class="tab" onclick="switchTab('recs',this)">POLICY RECOMMENDATIONS</button>
+        <button class="tab" onclick="switchTab('cases',this)">CASE STUDIES</button>
+        <button class="tab" onclick="switchTab('calc',this)">RISK CALCULATIONS</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-brief">
+        <div class="brief-section">
+          <div class="brief-section-title">Main Risks & Vulnerabilities</div>
+          <div id="briefContentArea"></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-recs">
+        <div class="brief-section">
+          <div class="brief-section-title">Policy Recommendations</div>
+          <div id="recContentArea"></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-cases">
+        <div class="brief-section">
+          <div class="brief-section-title">Case Studies</div>
+          <div id="caseContent"></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-calc">
+        <div class="brief-section">
+          <div class="brief-section-title">Risk Calculation Methodology & Definitions</div>
+          <p class="brief-body-text" id="calcMethodologyText" style="margin-bottom: 16px;"></p>
+          
+          <div style="margin-bottom: 16px;">
+            <div style="margin-bottom: 6px;"><span class="badge burden-triple">Triple burden</span></div>
+            <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+              <p style="font-weight: 500; margin: 0;">High physical exposure, high social vulnerability, and high worker transition impact simultaneously (scores &ge; 6.5 across all three indices).</p>
+            </div>
+          </div>
+          
+          <div style="margin-bottom: 16px;">
+            <div style="margin-bottom: 6px;"><span class="badge burden-double">Double burden</span></div>
+            <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+              <p style="font-weight: 500; margin: 0;">Elevated risk (scores &ge; 6.5) across two of the three indexes.</p>
+            </div>
+          </div>
+          
+          <div style="margin-bottom: 16px;">
+            <div style="margin-bottom: 6px;"><span class="badge burden-single">Moderate risk</span></div>
+            <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+              <p style="font-weight: 500; margin: 0;">Elevated risk (scores &ge; 6.5) on one or fewer indices.</p>
+            </div>
+          </div>
+
+          <div>
+            <div style="margin-bottom: 6px;"><span class="badge burden-low">Low risk</span></div>
+            <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px;">
+              <p style="font-weight: 500; margin: 0;">Scores below 6.5 across all three indices, reflecting baseline exposure without acute structural compounding.</p>
+            </div>
+          </div>
+
+          <p style="font-size: 14px; font-style: italic; color: #475569; margin-top: 16px;">
+            Read more about these calculations in the UNESCO report on page(s) 8, 16, 51.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const regions = {
+  LAC: {
+    climate: 5.2, 
+    social: 4.1, 
+    transition: 5.8, 
+    focus: "Vulnerability of Indigenous populations to climate risks, drought exposure, and equitable transition of critical minerals",
+    recs: [
+      {title: "Implement compensatory measures to shield affected groups, communities or enterprises.", sub: "Integrating revenue-recycling mechanisms, carbon tax rebates, and progressive green subsidies to offset regressive burdens on vulnerable populations.", page: "67"},
+      {title: "Incorporate SDG 10 and SDG 13 jointly into government budgetary plans and programmes.", sub: "Aligning climate mitigation and inequality reduction targets directly within national public finance and budgetary frameworks.", page: "65"},
+      {title: "Support and prioritize low-carbon supply chains.", sub: "Incentivizing sustainable production standards and green trade policies to minimize carbon footprints and foster regional industrial resilience.", page: "68"}
+    ],
+    cases: [
+      "Critical Transition Minerals (Chile)", "As the demand for renewable energy technologies surges, developing nations heavily reliant on the export of ores and metals may find themselves in a precarious situation attempting to balance economic growth with sustainable practices.<br><em>Location in Who Bears the Costs? Report: Page 54</em><br><strong>Relevance:</strong> Directly addresses regional economic exposure as a major global supplier of critical transition minerals.",
+      "Fuel Subsidy Backlash (Ecuador)", "Since 2021, the Government of Ecuador has attempted to remove fuel subsidies, causing sharp increases in fuel prices and triggering nationwide protests by Indigenous groups and low-income communities.<br><em>Location in Who Bears the Costs? Report: Page 61</em><br><strong>Relevance:</strong> Highlights regional friction points regarding subsidy reform and social equity."
+    ]
+  },
+  Placeholder: {
+    climate: 0.0, social: 0.0, transition: 0.0,
+    focus: "Data pending validation of the draft policy toolkit",
+    recs: [],
+    cases: ["Data Pending", "Case studies will be populated in subsequent development phases."]
+  }
+};
+
+const countries = {
+  Argentina: { climate: 5.4, social: 2.5, transition: 6.2, focus: "Agricultural exposure and extreme heat", explanation: "the nation's vast agro-export economy is highly dependent on predictable rainfall and seasonal stability, leaving rural livelihoods vulnerable to prolonged droughts and thermal anomalies." },
+  Bahamas: { climate: 8.0, social: 4.0, transition: 5.0, focus: "Sea-level rise and hurricanes", explanation: "the country's low-lying archipelagic geography and fragile island ecosystems expose coastal settlements to compounding physical climate shocks." },
+  Bolivia: { climate: 6.5, social: 7.0, transition: 6.0, focus: "Indigenous populations exposed to climate risks (over 60% of population)", explanation: "over 60% of the population identifies as Indigenous, residing in high Andean and rural ecosystems where traditional livelihoods are heavily disrupted by glacier retreat and erratic weather patterns." },
+  Brazil: { climate: 4.0, social: 2.2, transition: 7.7, focus: "Hydropower risks and Amazon reforestation", explanation: "the national power grid relies heavily on hydropower, which is vulnerable to hydrological droughts, while the Amazon biome requires extensive community-led reforestation to protect critical carbon sinks." },
+  Chile: { climate: 3.0, social: 2.2, transition: 4.2, focus: "Transition minerals and green supply chains", explanation: "the nation is a global leader in copper and lithium extraction, creating intense structural pressure to balance green export demands with stringent environmental safeguards and fair labour practices." },
+  Colombia: { climate: 3.0, social: 2.5, transition: 7.8, focus: "Hydropower dependence reaching 62.3% of total generation", explanation: "the electricity matrix depends on hydropower for over 62% of total generation, making the energy sector acutely sensitive to La Niña-driven reservoir fluctuations." },
+  Costa_Rica: { climate: 2.5, social: 2.0, transition: 5.8, focus: "Sustaining 1.5°C compatible climate leadership", explanation: "while maintaining robust 1.5°C-compatible policy alignment, domestic labour markets exhibit high inequality and workforce training shortages that complicate net-zero execution." },
+  Dominican_Republic: { climate: 7.5, social: 5.5, transition: 5.5, focus: "Sea-level rise and hurricanes", explanation: "its Caribbean insular positioning places coastal tourism and agricultural infrastructure at continuous risk of tropical storm devastation." },
+  Ecuador: { climate: 4.0, social: 3.0, transition: 5.0, focus: "Fuel subsidy reform and social unrest", explanation: "attempts to remove regressive fuel subsidies directly trigger nationwide protests from low-income and Indigenous communities lacking financial buffers." },
+  Guatemala: { climate: 6.0, social: 6.5, transition: 5.5, focus: "Indigenous populations and extreme weather (over 33% of population)", explanation: "more than a third of the population is Indigenous, highly dependent on smallholder agriculture, and severely exposed to recurring tropical weather extremes." },
+  Haiti: { climate: 8.5, social: 8.5, transition: 6.0, focus: "Sea-level rise and hurricanes", explanation: "compounding institutional fragility, severe poverty, and high exposure to hurricanes lock vulnerable communities into cycles of post-disaster decline." },
+  Jamaica: { climate: 7.0, social: 5.0, transition: 5.5, focus: "Sea-level rise and hurricanes", explanation: "the narrow economic base and coastal infrastructure are directly threatened by rising sea levels and intense seasonal hurricane activity." },
+  Mexico: { climate: 5.0, social: 2.7, transition: 6.5, focus: "Coastal wetlands and smallholder coffee producers", explanation: "extensive coastal wetlands and hundreds of thousands of smallholder coffee producers face severe climate pressures from warming temperatures and shifting rainfall." },
+  Panama: { climate: 5.5, social: 4.0, transition: 5.0, focus: "Climate change exposure among Indigenous populations", explanation: "Indigenous territories and the inter-oceanic transit corridor are directly exposed to shifting regional precipitation and extreme weather events." },
+  Paraguay: { climate: 5.0, social: 5.0, transition: 5.5, focus: "Landlocked developing country (LLDC) vulnerabilities", explanation: "as a landlocked developing nation, it relies heavily on agricultural exports while facing structural infrastructure limits during climate anomalies." },
+  Peru: { climate: 3.3, social: 4.1, transition: 6.0, focus: "Disaster-driven poverty and extreme weather events", explanation: "recurring climate disasters trigger sharp spikes in regional poverty rates, undermining long-term household recovery in Andean and coastal zones." },
+  Uruguay: { climate: 4.0, social: 3.0, transition: 5.0, focus: "Transition risks in agricultural exports", explanation: "the export-driven agricultural economy must adapt to stringent international low-carbon standards without creating domestic economic dislocation." }
+};
+
+const recommendations = {
+  Argentina: [
+    {title: "Incorporate SDG 10 and SDG 13 jointly into government budgetary plans and programmes.", sub: "Aligning climate mitigation and inequality reduction targets directly within national public finance and budgetary frameworks.", page: "65"},
+    {title: "Strengthen social protection systems through NDC adaptation strategies.", sub: "Expanding healthcare and social safety nets within national climate adaptation commitments to protect vulnerable groups.", page: "66"},
+    {title: "Support and prioritize low-carbon supply chains.", sub: "Incentivizing sustainable production standards and green trade policies to minimize carbon footprints and foster regional industrial resilience.", page: "68"}
+  ],
+  Bahamas: [
+    {title: "Create legal frameworks and allocate loss and damage funds to support planned and emergent climate migration.", sub: "Establishing institutional relocation guidelines and dedicated financial mechanisms to support vulnerable coastal populations.", page: "66"},
+    {title: "Prioritize climate finance with a vulnerable-first approach.", sub: "Directing international adaptation funds toward island states and communities possessing high physical exposure and low adaptive capacity.", page: "66"},
+    {title: "Develop climate-resilient conservation strategies.", sub: "Integrating ecosystem-based adaptation and resilient material techniques into coastal and marine resource management.", page: "69"}
+  ],
+  Bolivia: [
+    {title: "Promote community-led heritage preservation.", sub: "Integrating traditional ecological knowledge and grassroots leadership into national conservation and adaptation initiatives.", page: "67"},
+    {title: "Implement compensatory measures to shield affected groups, communities or enterprises.", sub: "Introducing targeted subsidies, tax rebates, and revenue recycling to protect marginalized populations from transition shocks.", page: "67"},
+    {title: "Embed climate education and awareness programmes for empowered action.", sub: "Updating school curricula and public training initiatives to foster community resilience and climate literacy.", page: "67"}
+  ],
+  Brazil: [
+    {title: "Prioritize climate finance with a vulnerable-first approach.", sub: "Directing international adaptation funds toward regions and communities possessing high physical exposure and low adaptive capacity.", page: "66"},
+    {title: "Incorporate SDG 10 and SDG 13 jointly into government budgetary plans and programmes.", sub: "Aligning climate mitigation and inequality reduction targets directly within national public finance and budgetary frameworks.", page: "65"},
+    {title: "Promote strategic environmental assessment (SEA) to minimize the environmental and climate impacts of economic development plans and programmes.", sub: "Modernizing environmental governance instruments to evaluate long-term sustainability across productive sectors prior to project execution.", page: "66"}
+  ],
+  Chile: [
+    {title: "Support and prioritize low-carbon supply chains.", sub: "Incentivizing sustainable production standards and green trade policies to minimize carbon footprints and foster regional industrial resilience.", page: "68"},
+    {title: "Implement compensatory measures to shield affected groups, communities or enterprises.", sub: "Introducing targeted subsidies, tax rebates, and revenue recycling to protect marginalized populations from transition shocks.", page: "67"},
+    {title: "Expand research on the distributional impacts of climate policies, prioritizing the development of advanced metrics to guide decision-makers.", sub: "Funding empirical studies on sector-specific transition costs to ensure equitable and socially just policy design.", page: "67"}
+  ],
+  Colombia: [
+    {title: "Strengthen social protection systems through NDC adaptation strategies.", sub: "Expanding healthcare and social safety nets within national climate adaptation commitments to protect vulnerable groups.", page: "66"},
+    {title: "Integrate gender considerations into key governmental plans and programmes addressing climate change risks.", sub: "Mandating gender-disaggregated data collection and inclusive participation in all stages of environmental policy formulation.", page: "67"},
+    {title: "Choose worker solidarity over labour resistance as a path to inclusive transition.", sub: "Providing comprehensive retraining programmes, trade adjustment assistance, and income support for workers in transitioning sectors.", page: "67"}
+  ],
+  Costa_Rica: [
+    {title: "Integrate technology transfer strategies and investments into NDCs and national development plans.", sub: "Facilitating intellectual property sharing, know-how exchanges, and public-private R&D cooperation to boost clean technology capacity.", page: "68"},
+    {title: "Prioritize sustainability approaches in the research, development and demonstration (RD&D) of emerging and advanced technologies.", sub: "Ensuring innovations like AI and advanced agriculture strictly adhere to long-term lifecycle carbon reduction principles.", page: "68"},
+    {title: "Advance regulatory frameworks for technology transfer at the local level.", sub: "Strengthening municipal rules, financial incentives, and local innovation ecosystems to absorb clean energy solutions.", page: "68"}
+  ],
+  Dominican_Republic: [
+    {title: "Create legal frameworks and allocate loss and damage funds to support planned and emergent climate migration.", sub: "Establishing institutional relocation guidelines and dedicated financial mechanisms to support vulnerable coastal populations.", page: "66"},
+    {title: "Prioritize climate finance with a vulnerable-first approach.", sub: "Directing international adaptation funds toward regions and communities possessing high physical exposure and low adaptive capacity.", page: "66"},
+    {title: "Develop climate-resilient conservation strategies.", sub: "Integrating ecosystem-based adaptation and resilient material techniques into coastal and marine resource management.", page: "69"}
+  ],
+  Ecuador: [
+    {title: "Implement compensatory measures to shield affected groups, communities or enterprises.", sub: "Introducing targeted subsidies, tax rebates, and revenue recycling to protect marginalized populations from transition shocks.", page: "67"},
+    {title: "Embed climate education and awareness programmes for empowered action.", sub: "Updating school curricula and public training initiatives to foster community resilience and climate literacy.", page: "67"},
+    {title: "Choose worker solidarity over labour resistance as a path to inclusive transition.", sub: "Providing comprehensive retraining programmes, trade adjustment assistance, and income support for workers in transitioning sectors.", page: "67"}
+  ],
+  Guatemala: [
+    {title: "Promote community-led heritage preservation.", sub: "Integrating traditional ecological knowledge and grassroots leadership into national conservation and adaptation initiatives.", page: "67"},
+    {title: "Implement compensatory measures to shield affected groups, communities or enterprises.", sub: "Introducing targeted subsidies, tax rebates, and revenue recycling to protect marginalized populations from transition shocks.", page: "67"},
+    {title: "Embed climate education and awareness programmes for empowered action.", sub: "Updating school curricula and public training initiatives to foster community resilience and climate literacy.", page: "67"}
+  ],
+  Haiti: [
+    {title: "Create legal frameworks and allocate loss and damage funds to support planned and emergent climate migration.", sub: "Establishing institutional relocation guidelines and dedicated financial mechanisms to support vulnerable coastal populations.", page: "66"},
+    {title: "Prioritize climate finance with a vulnerable-first approach.", sub: "Directing international adaptation funds toward regions and communities possessing high physical exposure and low adaptive capacity.", page: "66"},
+    {title: "Develop climate-resilient conservation strategies.", sub: "Integrating ecosystem-based adaptation and resilient material techniques into coastal and marine resource management.", page: "69"}
+  ],
+  Jamaica: [
+    {title: "Create legal frameworks and allocate loss and damage funds to support planned and emergent climate migration.", sub: "Establishing institutional relocation guidelines and dedicated financial mechanisms to support vulnerable coastal populations.", page: "66"},
+    {title: "Prioritize climate finance with a vulnerable-first approach.", sub: "Directing international adaptation funds toward regions and communities possessing high physical exposure and low adaptive capacity.", page: "66"},
+    {title: "Develop climate-resilient conservation strategies.", sub: "Integrating ecosystem-based adaptation and resilient material techniques into coastal and marine resource management.", page: "69"}
+  ],
+  Mexico: [
+    {title: "Implement compensatory measures to shield affected groups, communities or enterprises.", sub: "Introducing targeted subsidies, tax rebates, and revenue recycling to protect marginalized populations from transition shocks.", page: "67"},
+    {title: "Promote a comprehensive and synergistic approach to advancing SDGs 1, 5 and 7, ensuring that their interconnections are leveraged for maximum impact.", sub: "Linking poverty reduction, gender equity, and clean energy access across governmental ministries to maximize co-benefits.", page: "66"},
+    {title: "Promote community-led heritage preservation.", sub: "Integrating traditional ecological knowledge and grassroots leadership into national conservation and adaptation initiatives.", page: "67"}
+  ],
+  Panama: [
+    {title: "Promote community-led heritage preservation.", sub: "Integrating traditional ecological knowledge and grassroots leadership into national conservation and adaptation initiatives.", page: "67"},
+    {title: "Implement compensatory measures to shield affected groups, communities or enterprises.", sub: "Introducing targeted subsidies, tax rebates, and revenue recycling to protect marginalized populations from transition shocks.", page: "67"},
+    {title: "Embed climate education and awareness programmes for empowered action.", sub: "Updating school curricula and public training initiatives to foster community resilience and climate literacy.", page: "67"}
+  ],
+  Paraguay: [
+    {title: "Incorporate SDG 10 and SDG 13 jointly into government budgetary plans and programmes.", sub: "Aligning climate mitigation and inequality reduction targets directly within national public finance and budgetary frameworks.", page: "65"},
+    {title: "Strengthen social protection systems through NDC adaptation strategies.", sub: "Expanding healthcare and social safety nets within national climate adaptation commitments to protect vulnerable groups.", page: "66"},
+    {title: "Support and prioritize low-carbon supply chains.", sub: "Incentivizing sustainable production standards and green trade policies to minimize carbon footprints and foster regional industrial resilience.", page: "68"}
+  ],
+  Peru: [
+    {title: "Create legal frameworks and allocate loss and damage funds to support planned and emergent climate migration.", sub: "Establishing institutional relocation guidelines and dedicated financial mechanisms to support vulnerable coastal populations.", page: "66"},
+    {title: "Prioritize climate finance with a vulnerable-first approach.", sub: "Directing international adaptation funds toward regions and communities possessing high physical exposure and low adaptive capacity.", page: "66"},
+    {title: "Develop climate-resilient conservation strategies.", sub: "Integrating ecosystem-based adaptation and resilient material techniques into coastal and marine resource management.", page: "69"}
+  ],
+  Uruguay: [
+    {title: "Incorporate SDG 10 and SDG 13 jointly into government budgetary plans and programmes.", sub: "Aligning climate mitigation and inequality reduction targets directly within national public finance and budgetary frameworks.", page: "65"},
+    {title: "Strengthen social protection systems through NDC adaptation strategies.", sub: "Expanding healthcare and social safety nets within national climate adaptation commitments to protect vulnerable groups.", page: "66"},
+    {title: "Support and prioritize low-carbon supply chains.", sub: "Incentivizing sustainable production standards and green trade policies to minimize carbon footprints and foster regional industrial resilience.", page: "68"}
+  ]
+};
+
+const caseStudies = {
+  Argentina: [
+    "Farmers' Protests",
+    "In Germany and India, farmers protested against agricultural reforms and subsidy cuts, reflecting broader tensions between climate objectives and the economic realities faced by farmers. <a href='https://theconversation.com/indias-farmers-are-right-to-protest-against-agricultural-reforms-152726' target='_blank'>Source: The Conversation</a><br><em>Location in Who Bears the Costs? Report: Page 60</em><br><strong>Relevance:</strong> Demonstrates how agricultural policy adjustments and cost burdens spark agrarian social resistance, mirroring the agricultural exposure pressures faced in Argentina.",
+    "Macro-Financial Transition",
+    "Economic dislocation could trigger short-term instability while entrenching long-term inequalities. Without strong social protection measures, the shift to a green economy could deepen social divides. <a href='https://www.unesco.org/en/articles/who-bears-costs-addressing-inequalities-climate-change-and-climate-action' target='_blank'>Source: UNESCO</a><br><em>Location in Who Bears the Costs? Report: Page 49</em><br><strong>Relevance:</strong> Highlights structural macro-financial risks directly applicable to managing equitable green economic adjustments in Argentina."
+  ],
+  Bahamas: [
+    "Disaster-Driven Poverty",
+    "In Peru, the occurrence of just one additional climate-related disaster per year has been linked to a 16-23% increase in poverty rates. <a href='https://link.springer.com/article/10.1007/s41885-020-00060-5' target='_blank'>Source: Springer</a><br><em>Location in Who Bears the Costs? Report: Page 18</em><br><strong>Relevance:</strong> Illustrates how compounding extreme hydrometeorological disasters rapidly escalate poverty, serving as a critical warning for island states like the Bahamas.",
+    "Gulf of Mexico Coastal Wetlands",
+    "The project empowered local communities led by women to collaboratively analyse their adaptation needs. <a href='http://documents.worldbank.org/curated/en/973851493918251343' target='_blank'>Source: World Bank Group</a><br><em>Location in Who Bears the Costs? Report: Page 27</em><br><strong>Relevance:</strong> Provides a regional community-based coastal protection model relevant to managing sea-level rise vulnerabilities in the Bahamas."
+  ],
+  Bolivia: [
+    "Fuel Subsidy Backlash",
+    "Since 2021, the Government of Ecuador has attempted to remove fuel subsidies, causing sharp increases in fuel prices and triggering nationwide protests by Indigenous groups and low-income communities. <a href='https://blogs.iadb.org/sostenibilidad/en/energy-subsidy-reform-in-ecuador-could-yield-social-fiscal-and-climate-benefits/' target='_blank'>Source: Inter-American Development Bank</a><br><em>Location in Who Bears the Costs? Report: Page 61</em><br><strong>Relevance:</strong> Directly informs how energy and subsidy policy shifts risk destabilizing vulnerable Indigenous populations heavily reliant on baseline commodity pricing.",
+    "Congo Rainforest Reforestation",
+    "Nature-based solutions in Virunga National Park, driven by women-led initiatives, demonstrate how reforestation creates income-generating activities and aids conservation. <a href='https://courier.unesco.org/en/articles/africa-mountain-gorillas-make-comeback' target='_blank'>Source: UNESCO</a><br><em>Location in Who Bears the Costs? Report: Page 40</em><br><strong>Relevance:</strong> Offers an empowering blueprint for community-led ecological restoration and conservation in high-biodiversity ecosystems."
+  ],
+  Brazil: [
+    "Congo Rainforest Reforestation",
+    "Nature-based solutions in Virunga National Park, driven by women-led initiatives, demonstrate how reforestation creates income-generating activities and aids conservation, offering a parallel for Amazon transition strategies. <a href='https://courier.unesco.org/en/articles/africa-mountain-gorillas-make-comeback' target='_blank'>Source: UNESCO</a><br><em>Location in Who Bears the Costs? Report: Page 40</em><br><strong>Relevance:</strong> Serves as a direct operational parallel for community-driven reforestation and conservation in the Amazon biome.",
+    "Hydropower Vulnerability",
+    "Hydropower is highly dependent on consistent water flow, which is increasingly endangered by shifting weather patterns, prolonged droughts and the melting of glaciers. Brazil is a notable example, since a large number of its hydropower plants are expected to bear the impacts of climate change. <a href='https://datasets.wri.org/dataset/globalpowerplantdatabase' target='_blank'>Source: World Resources Institute</a><br><em>Location in Who Bears the Costs? Report: Page 48</em><br><strong>Relevance:</strong> Directly maps the physical risks facing Brazil's core national energy matrix due to climate-driven hydrological shifts."
+  ],
+  Chile: [
+    "Critical Transition Minerals",
+    "As the demand for renewable energy technologies surges, developing nations heavily reliant on the export of ores and metals may find themselves in a precarious situation attempting to balance economic growth with sustainable practices. <a href='https://www.oecd.org/en/publications/raw-materials-critical-for-the-green-transition_c6bb598b-en.html' target='_blank'>Source: OECD</a><br><em>Location in Who Bears the Costs? Report: Page 54</em><br><strong>Relevance:</strong> Directly addresses Chile's unique economic exposure as a global leader in critical mineral exports for the green transition.",
+    "Coal Phase-Out Protests",
+    "In Germany and Poland, efforts to phase out coal mining and transition to renewable energy spurred protests by energy sector workers, highlighting the need for transparent implementation to mitigate social impacts. <a href='https://doi.org/10.1016/j.eneco.2020.105008' target='_blank'>Source: Elsevier</a><br><em>Location in Who Bears the Costs? Report: Page 60</em><br><strong>Relevance:</strong> Provides a vital comparative lesson for managing worker transitions and avoiding labour resistance during national decarbonization."
+  ],
+  Colombia: [
+    "Hydropower Dependence",
+    "Colombia can be affected as well; even though hydropower constitutes 62.3% of its total power generation. The reduced rainfall linked to La Niña events diminishes water levels in reservoirs, compromising the efficiency and reliability of hydropower plants. <a href='https://ourworldindata.org/electricity-mix' target='_blank'>Source: Our World in Data</a><br><em>Location in Who Bears the Costs? Report: Page 48</em><br><strong>Relevance:</strong> Directly analyzes Colombia's high structural dependency on hydrological energy generation under drought stress.",
+    "Disaster-Driven Poverty",
+    "In Peru, the occurrence of just one additional climate-related disaster per year has been linked to a 16-23% increase in poverty rates, illustrating the compounding threat of extreme hydrometeorological events. <a href='https://link.springer.com/article/10.1007/s41885-020-00060-5' target='_blank'>Source: Springer</a><br><em>Location in Who Bears the Costs? Report: Page 18</em><br><strong>Relevance:</strong> Highlights the compounding economic risks that extreme climate disasters pose to developing social strata in Andean nations."
+  ],
+  Costa_Rica: [
+    "1.5°C Compatible Leadership",
+    "Costa Rica stands out as the only country with policies and actions that align with the 1.5°C target of the Paris Agreement, coupled with a transparent and credible net-zero target. <a href='https://climateactiontracker.org' target='_blank'>Source: Climate Action Tracker</a><br><em>Location in Who Bears the Costs? Report: Page 39</em><br><strong>Relevance:</strong> Validates Costa Rica's vanguard role in international climate ambition and transparent alignment with net-zero benchmarks.",
+    "Green Workforce Gaps",
+    "Costa Rica has a higher-than-average proportion of workers vulnerable to the economic transitions required for achieving net zero, complicated by a population with generally low levels of education and high inequality. <a href='https://www.unesco.org/en/articles/who-bears-costs-addressing-inequalities-climate-change-and-climate-action' target='_blank'>Source: UNESCO</a><br><em>Location in Who Bears the Costs? Report: Page 39</em><br><strong>Relevance:</strong> Identifies the specific domestic labour market constraints that must be managed to ensure an equitable transition."
+  ],
+  Dominican_Republic: [
+    "Disaster-Driven Poverty",
+    "In Peru, the occurrence of just one additional climate-related disaster per year has been linked to a 16-23% increase in poverty rates. <a href='https://link.springer.com/article/10.1007/s41885-020-00060-5' target='_blank'>Source: Springer</a><br><em>Location in Who Bears the Costs? Report: Page 18</em><br><strong>Relevance:</strong> Demonstrates the severe poverty risks posed by frequent tropical storms and hydrometeorological shocks in island economies.",
+    "Gulf of Mexico Coastal Wetlands",
+    "The project empowered local communities led by women to collaboratively analyse their adaptation needs. <a href='http://documents.worldbank.org/curated/en/973851493918251343' target='_blank'>Source: World Bank Group</a><br><em>Location in Who Bears the Costs? Report: Page 27</em><br><strong>Relevance:</strong> Offers a tested framework for community-led coastal defense and ecosystem-based adaptation."
+  ],
+  Ecuador: [
+    "Fuel Subsidy Backlash",
+    "Since 2021, the Government of Ecuador has attempted to remove fuel subsidies, causing sharp increases in fuel prices and triggering nationwide protests by Indigenous groups and low-income communities. <a href='https://blogs.iadb.org/sostenibilidad/en/energy-subsidy-reform-in-ecuador-could-yield-social-fiscal-and-climate-benefits/' target='_blank'>Source: Inter-American Development Bank</a><br><em>Location in Who Bears the Costs? Report: Page 61</em><br><strong>Relevance:</strong> Direct analysis of Ecuador's national friction points regarding subsidy reform and social equity.",
+    "Gilets Jaunes Precedent",
+    "The yellow vests protests in France demonstrated that the push for a green transition collides with the need to prevent an increase in poverty, addressing the need for socially fair policies. <a href='https://www.lemonde.fr/les-decodeurs/article/2018/12/07/comprendre-la-taxe-carbone-en-huit-questions_5394292_4355770.html' target='_blank'>Source: Le Monde</a><br><em>Location in Who Bears the Costs? Report: Page 60</em><br><strong>Relevance:</strong> Explores the broader global precedent for avoiding regressive public backlashes against carbon pricing and green taxes."
+  ],
+  Guatemala: [
+    "Fuel Subsidy Backlash",
+    "Since 2021, the Government of Ecuador has attempted to remove fuel subsidies, causing sharp increases in fuel prices and triggering nationwide protests by Indigenous groups and low-income communities. <a href='https://blogs.iadb.org/sostenibilidad/en/energy-subsidy-reform-in-ecuador-could-yield-social-fiscal-and-climate-benefits/' target='_blank'>Source: Inter-American Development Bank</a><br><em>Location in Who Bears the Costs? Report: Page 61</em><br><strong>Relevance:</strong> Highlights the delicate socioeconomic balance required when implementing fiscal reforms that affect rural and Indigenous livelihoods.",
+    "Congo Rainforest Reforestation",
+    "Nature-based solutions in Virunga National Park, driven by women-led initiatives, demonstrate how reforestation creates income-generating activities and aids conservation. <a href='https://courier.unesco.org/en/articles/africa-mountain-gorillas-make-comeback' target='_blank'>Source: UNESCO</a><br><em>Location in Who Bears the Costs? Report: Page 40</em><br><strong>Relevance:</strong> Provides a valuable blueprint for community-led conservation initiatives in Central American ecosystems."
+  ],
+  Haiti: [
+    "Disaster-Driven Poverty",
+    "In Peru, the occurrence of just one additional climate-related disaster per year has been linked to a 16-23% increase in poverty rates. <a href='https://link.springer.com/article/10.1007/s41885-020-00060-5' target='_blank'>Source: Springer</a><br><em>Location in Who Bears the Costs? Report: Page 18</em><br><strong>Relevance:</strong> Directly mirrors Haiti's extreme vulnerability to compounding shocks that lock vulnerable households in cycles of poverty.",
+    "Gulf of Mexico Coastal Wetlands",
+    "The project empowered local communities led by women to collaboratively analyse their adaptation needs. <a href='http://documents.worldbank.org/curated/en/973851493918251343' target='_blank'>Source: World Bank Group</a><br><em>Location in Who Bears the Costs? Report: Page 27</em><br><strong>Relevance:</strong> Illustrates grassroots adaptation strategies vital for climate-vulnerable Caribbean nations."
+  ],
+  Jamaica: [
+    "Disaster-Driven Poverty",
+    "In Peru, the occurrence of just one additional climate-related disaster per year has been linked to a 16-23% increase in poverty rates. <a href='https://link.springer.com/article/10.1007/s41885-020-00060-5' target='_blank'>Source: Springer</a><br><em>Location in Who Bears the Costs? Report: Page 18</em><br><strong>Relevance:</strong> Contextualizes the severe threat that frequent extreme weather events pose to island economies and community resilience.",
+    "Gulf of Mexico Coastal Wetlands",
+    "The project empowered local communities led by women to collaboratively analyse their adaptation needs. <a href='http://documents.worldbank.org/curated/en/973851493918251343' target='_blank'>Source: World Bank Group</a><br><em>Location in Who Bears the Costs? Report: Page 27</em><br><strong>Relevance:</strong> Showcases community-based ecosystem management approaches applicable to coastal adaptation in Jamaica."
+  ],
+  Mexico: [
+    "Gulf of Mexico Coastal Wetlands",
+    "The project empowered local communities led by women to collaboratively analyse their adaptation needs. In Las Coloradas, mangrove reforestation was carried out, 5,600 chinampas and stilt houses were built, and more than 20,000 plants were planted. <a href='http://documents.worldbank.org/curated/en/973851493918251343' target='_blank'>Source: World Bank Group</a><br><em>Location in Who Bears the Costs? Report: Page 27</em><br><strong>Relevance:</strong> Features a direct local project highlighting women-led mangrove restoration and climate adaptation in Mexico.",
+    "Veracruz Coffee Farms",
+    "In Coatepec and Fortín, local economies are heavily tied to coffee production, meaning 86,000 producers and their families count on it for financial stability. Rising temperatures, unpredictable precipitation and prolonged droughts are causing huge challenges. <a href='https://cdigital.uv.mx/items/f89bdb4e-b262-48b4-8ba4-fd0de8c7bd4f' target='_blank'>Source: Universidad Veracruzana</a><br><em>Location in Who Bears the Costs? Report: Page 53</em><br><strong>Relevance:</strong> Directly addresses the climate vulnerability of smallholder agricultural producers in key Mexican regions."
+  ],
+  Panama: [
+    "Fuel Subsidy Backlash",
+    "Since 2021, the Government of Ecuador has attempted to remove fuel subsidies, causing sharp increases in fuel prices and triggering nationwide protests by Indigenous groups and low-income communities. <a href='https://blogs.iadb.org/sostenibilidad/en/energy-subsidy-reform-in-ecuador-could-yield-social-fiscal-and-climate-benefits/' target='_blank'>Source: Inter-American Development Bank</a><br><em>Location in Who Bears the Costs? Report: Page 61</em><br><strong>Relevance:</strong> Highlights the social risks of implementing uncompensated economic transitions in transit and commodity economies.",
+    "Congo Rainforest Reforestation",
+    "Nature-based solutions in Virunga National Park, driven by women-led initiatives, demonstrate how reforestation creates income-generating activities and aids conservation. <a href='https://courier.unesco.org/en/articles/africa-mountain-gorillas-make-comeback' target='_blank'>Source: UNESCO</a><br><em>Location in Who Bears the Costs? Report: Page 40</em><br><strong>Relevance:</strong> Provides insights into tropical forest conservation and community engagement relevant to the Mesoamerican biological corridor."
+  ],
+  Paraguay: [
+    "Farmers' Protests",
+    "In Germany and India, farmers protested against agricultural reforms and subsidy cuts, reflecting broader tensions between climate objectives and the economic realities faced by farmers. <a href='https://theconversation.com/indias-farmers-are-right-to-protest-against-agricultural-reforms-152726' target='_blank'>Source: The Conversation</a><br><em>Location in Who Bears the Costs? Report: Page 61</em><br><strong>Relevance:</strong> Reflects the economic pressures and potential agrarian resistance associated with environmental reforms in export-driven agricultural nations.",
+    "Macro-Financial Transition",
+    "Economic dislocation could trigger short-term instability while entrenching long-term inequalities. Without strong social protection measures, the shift to a green economy could deepen social divides. <a href='https://www.unesco.org/en/articles/who-bears-costs-addressing-inequalities-climate-change-and-climate-action' target='_blank'>Source: UNESCO</a><br><em>Location in Who Bears the Costs? Report: Page 49</em><br><strong>Relevance:</strong> Examines macroeconomic vulnerabilities important for landlocked developing economies undergoing structural transformation."
+  ],
+  Peru: [
+    "Disaster-Driven Poverty",
+    "In Peru, the occurrence of just one additional climate-related disaster per year has been linked to a 16-23% increase in poverty rates. <a href='https://link.springer.com/article/10.1007/s41885-020-00060-5' target='_blank'>Source: Springer</a><br><em>Location in Who Bears the Costs? Report: Page 18</em><br><strong>Relevance:</strong> Directly cites empirical data from Peru showing how repeated extreme climate events drive vulnerable populations into poverty.",
+    "Pakistan Flooding Analogy",
+    "In Pakistan, where 44% of the population is below the poverty line, torrential rains affected 33 million inhabitants and displaced 8 million people, demonstrating how extreme events limit recovery capacity. <a href='https://www.aljazeera.com/gallery/2023/10/24/photos-over-a-year-after-pakistan-floods-survivors-battle-climate-anxiety' target='_blank'>Source: Al Jazeera</a><br><em>Location in Who Bears the Costs? Report: Page 20</em><br><strong>Relevance:</strong> Illustrates the compounding scale of post-disaster recovery challenges relevant to Andean disaster management."
+  ],
+  Uruguay: [
+    "Farmers' Protests",
+    "In Germany and India, farmers protested against agricultural reforms and subsidy cuts, reflecting broader tensions between climate objectives and the economic realities faced by farmers. <a href='https://theconversation.com/indias-farmers-are-right-to-protest-against-agricultural-reforms-152726' target='_blank'>Source: The Conversation</a><br><em>Location in Who Bears the Costs? Report: Page 61</em><br><strong>Relevance:</strong> Highlights the policy friction between agricultural export competitiveness and green transition standards.",
+    "Macro-Financial Transition",
+    "Economic dislocation could trigger short-term instability while entrenching long-term inequalities. Without strong social protection measures, the shift to a green economy could deepen social divides. <a href='https://www.unesco.org/en/articles/who-bears-costs-addressing-inequalities-climate-change-and-climate-action' target='_blank'>Source: UNESCO</a><br><em>Location in Who Bears the Costs? Report: Page 49</em><br><strong>Relevance:</strong> Focuses on the fiscal mechanisms necessary to safeguard social equity during national net-zero economic shifts."
+  ]
+};
+
+const lacCountryOptions = [
+  {value: "None", text: "None selected"},
+  {value: "Argentina", text: "Argentina"},
+  {value: "Bahamas", text: "Bahamas"},
+  {value: "Bolivia", text: "Bolivia"},
+  {value: "Brazil", text: "Brazil"},
+  {value: "Chile", text: "Chile"},
+  {value: "Colombia", text: "Colombia"},
+  {value: "Costa_Rica", text: "Costa Rica"},
+  {value: "Dominican_Republic", text: "Dominican Republic"},
+  {value: "Ecuador", text: "Ecuador"},
+  {value: "Guatemala", text: "Guatemala"},
+  {value: "Haiti", text: "Haiti"},
+  {value: "Jamaica", text: "Jamaica"},
+  {value: "Mexico", text: "Mexico"},
+  {value: "Panama", text: "Panama"},
+  {value: "Paraguay", text: "Paraguay"},
+  {value: "Peru", text: "Peru"},
+  {value: "Uruguay", text: "Uruguay"}
+];
+
+function initApp() {
+  updateRegion();
+}
+
+function getBurden(s) {
+  const h = [s.climate, s.social, s.transition].filter(v => v >= 6.5).length;
+  if (h === 3) return {label:"Triple burden", cls:"burden-triple", indexCount: "all three"};
+  if (h === 2) return {label:"Double burden", cls:"burden-double", indexCount: "exactly two"};
+  if (h === 1) return {label:"Moderate risk", cls:"burden-single", indexCount: "exactly one"};
+  return {label:"Low risk", cls:"burden-low", indexCount: "zero"};
+}
+
+function barColor(v){ return v >= 7.5 ? "#C53030" : v >= 5.5 ? "#C05621" : "#2F855A"; }
+
+function switchTab(id, btn) {
+  document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  document.getElementById("tab-" + id).classList.add("active");
+  btn.classList.add("active");
+}
+
+function updateRegion() {
+  const regionVal = document.getElementById("regionSelect").value;
+  const countrySelect = document.getElementById("countrySelect");
+  
+  countrySelect.innerHTML = "";
+  
+  if (regionVal === "LAC") {
+    lacCountryOptions.forEach(opt => {
+      let option = document.createElement("option");
+      option.value = opt.value;
+      option.text = opt.text;
+      countrySelect.add(option);
+    });
+  } else {
+    let option = document.createElement("option");
+    option.value = "None";
+    option.text = "None selected (Prototype limit)";
+    countrySelect.add(option);
+  }
+  
+  updateCountry();
+}
+
+function updateCountry() {
+  renderAll();
+}
+
+function renderAll() {
+  const regionVal = document.getElementById("regionSelect").value;
+  const countryVal = document.getElementById("countrySelect").value;
+  
+  let data, displayRegionName, displayCountryName, entityType, currentRecs, cs, yyCount;
+
+  displayRegionName = document.getElementById("regionSelect").options[document.getElementById("regionSelect").selectedIndex].text;
+
+  if (countryVal === "None" || !countries[countryVal]) {
+    data = regions[regionVal] || regions["Placeholder"];
+    entityType = "Region";
+    currentRecs = data.recs;
+    cs = data.cases;
+    yyCount = lacCountryOptions.length - 1; // 17 countries
+  } else {
+    data = countries[countryVal];
+    displayCountryName = document.getElementById("countrySelect").options[document.getElementById("countrySelect").selectedIndex].text;
+    entityType = "Member State";
+    currentRecs = recommendations[countryVal] || [];
+    cs = caseStudies[countryVal] || [];
+    yyCount = lacCountryOptions.length - 1; // 17 countries in LAC region baseline
+  }
+
+  document.getElementById("riskProfileHeader").innerText = `${entityType.toUpperCase()} RISK PROFILE`;
+
+  document.getElementById("pillGrid").innerHTML = [
+    {label:"Climate exposure", val:data.climate},
+    {label:"Social vulnerability", val:data.social},
+    {label:"Worker transition", val:data.transition}
+  ].map(d => `<div class="pill">
+      <div style="display:flex; justify-content:space-between; align-items:end;">
+          <div class="mlabel">${d.label}</div>
+          <div class="mval">${d.val.toFixed(1)}<span style="font-size:12px;color:#475569">/10</span></div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" style="width:${d.val * 10}%;background:${barColor(d.val)}"></div></div>
+  </div>`).join("");
+
+  const burden = getBurden(data);
+  const b = document.getElementById("burdenBadge");
+  b.textContent = burden.label + "*";
+  b.className = "badge " + burden.cls;
+  
+  const highScores = [data.climate, data.social, data.transition].filter(v => v >= 6.5).length;
+  const targetLabel = (entityType === "Region") ? displayRegionName : displayCountryName;
+
+  if (burden.label === "Low risk") {
+    document.getElementById("burdenFootnote").innerText = `*${targetLabel} did not score 6.5 or higher on any index.`;
+  } else if (burden.label === "Moderate risk") {
+    document.getElementById("burdenFootnote").innerText = `*${targetLabel} scored 6.5 or higher on exactly one index.`;
+  } else {
+    document.getElementById("burdenFootnote").innerText = `*${targetLabel} scores 6.5 or higher on ${burden.indexCount} indices.`;
+  }
+
+  let summaryText = `Selected region: <strong style="font-size: 17px; display: inline-block; margin: 2px 0;">${displayRegionName}</strong><br>`;
+  
+  if (entityType === "Member State") {
+    summaryText += `Selected member state: <strong style="font-size: 17px; display: inline-block; margin: 2px 0;">${displayCountryName}</strong><br><br>`;
+    summaryText += `<strong>Member state summary:</strong> <span class="focus-tag">${data.focus}</span> are the biggest equity challenge areas for ${displayCountryName} in its climate transition.<br><br>`;
+  } else {
+    if (regionVal !== "LAC") {
+      summaryText += `<br><strong>Region summary:</strong> <span style="color: #dc2626;">(Analysis pending validation of the draft policy toolkit)</span><br><br>`;
+    } else {
+      summaryText += `<br><strong>Region summary:</strong> <span class="focus-tag">${data.focus}</span> are the biggest equity challenge areas for ${displayRegionName} in its climate transition.<br><br>`;
+    }
+  }
+  summaryText += `<em>The analysis and information provided in the tabs below are drawn directly from UNESCO report <a href="https://www.unesco.org/en/articles/who-bears-costs-addressing-inequalities-climate-change-and-climate-action" target="_blank" style="color: #1d4ed8; text-decoration: none; font-weight: 500;">Who Bears the Costs? Addressing inequalities from climate change and climate action</a>.</em>`;
+  document.getElementById("summaryContainer").innerHTML = summaryText;
+
+  if (entityType === "Region" && regionVal !== "LAC") {
+    document.getElementById("recContentArea").innerHTML = `<p class="brief-body-text" style="color: #dc2626;">(Analysis pending validation of the draft policy toolkit)</p>`;
+    document.getElementById("briefContentArea").innerHTML = `<p class="brief-body-text" style="color: #dc2626;">(Analysis pending validation of the draft policy toolkit)</p>`;
+  } else {
+    document.getElementById("recContentArea").innerHTML = currentRecs.map((r,i) => `
+      <div class="rec-item">
+        <div class="rec-title"><span class="rec-num">${i+1}.</span><span>${r.title}</span></div>
+        <div class="rec-sub">
+          This can be done by:<br>
+          <ul style="margin: 4px 0 0 0; padding-left: 20px;">
+            <li>${r.sub} <em>(Report Reference: Page ${r.page})</em></li>
+          </ul>
+        </div>
+      </div>
+    `).join("");
+
+    if (entityType === "Region") {
+      document.getElementById("briefContentArea").innerHTML = `
+        <p class="brief-body-text">This profile synthesizes the structural equity risks and priorities identified for ${displayRegionName} in UNESCO's "Who Bears the Costs?" report. In line with the findings, the primary vulnerable groups and main risks are concentrated around: ${data.focus}. ${displayRegionName} exhibits an underlying physical climate exposure score of ${data.climate.toFixed(1)}/10, alongside a baseline social vulnerability profile of ${data.social.toFixed(1)}/10 and a worker transition risk matrix evaluated at ${data.transition.toFixed(1)}/10. This aggregated metric places the region under a structural classification of "${burden.label}".</p>
+        <div class="brief-section-title" style="text-transform: none; margin-top: 16px;">What this means:</div>
+        <p class="brief-body-text">For vulnerable populations within ${displayRegionName}, these compounding scores indicate heightened exposure to extreme weather events, reduced capacity to adapt due to structural inequalities, and severe risks of economic displacement without targeted social safety nets and inclusive climate policy design.</p>
+      `;
+    } else {
+      document.getElementById("briefContentArea").innerHTML = `
+        <p class="brief-body-text">${displayCountryName} exhibits an underlying physical climate exposure score of ${data.climate.toFixed(1)}/10, alongside a baseline social vulnerability profile of ${data.social.toFixed(1)}/10 and a worker transition risk matrix evaluated at ${data.transition.toFixed(1)}/10. This aggregated metric places the member state under a structural risk classification of "${burden.label}".</p>
+        <p class="brief-body-text" style="margin-top: 12px;"><strong>${data.focus}</strong> were found to be the biggest challenge areas because ${data.explanation}</p>
+        <div class="brief-section-title" style="text-transform: none; margin-top: 16px;">What this means:</div>
+        <p class="brief-body-text">For vulnerable populations within ${displayCountryName}, these compounding scores indicate heightened exposure to extreme weather events, reduced capacity to adapt due to structural inequalities, and severe risks of economic displacement without targeted social safety nets and inclusive climate policy design.</p>
+      `;
+    }
+  }
+
+  if (cs.length > 0) {
+    document.getElementById("caseContent").innerHTML = `
+      <div class="case-card"><p class="case-title">${cs[0]}</p><p class="case-body">${cs[1]}</p></div>
+      <div class="case-card"><p class="case-title">${cs[2]}</p><p class="case-body">${cs[3]}</p></div>`;
+  } else {
+    document.getElementById("caseContent").innerHTML = `<div class="case-card"><p class="case-title">Data Pending</p><p class="case-body">Case studies will be populated in subsequent development phases.</p></div>`;
+  }
+
+  if (entityType === "Region") {
+    if (regionVal === "LAC") {
+      document.getElementById("calcMethodologyText").innerText = `The risk profile calculations are averages based on an unweighted mean of the ${yyCount} countries in the region.`;
+    } else {
+      document.getElementById("calcMethodologyText").innerText = `The risk profile calculations are averages based on an unweighted mean of the (not yet assessed) countries in the region.`;
+    }
+  } else {
+    document.getElementById("calcMethodologyText").innerText = `Each member state's risk profile is calculated by assessing normalized scores across three independent composite dimensions: Physical Climate Exposure, Social Vulnerability (incorporating health, wealth, gender, rurality, and age dependency), and Worker Transition Vulnerability (evaluating workforce age, education, inequality, research capacity, government debt, and gender gaps) under the IPCC SSP2-RCP4.5 2040–2060 scenario.`;
+  }
+}
+</script>
+</body>
+</html>
