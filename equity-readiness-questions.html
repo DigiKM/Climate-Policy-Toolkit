@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 2: Equity Readiness Conceptual Schema</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .widget-container {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      border: 1px solid #cbd5e1;
+      padding: 30px;
+      width: 100%;
+      max-width: 1000px;
+      overflow-x: auto;
+      position: relative;
+    }
+    h2 {
+      text-align: center;
+      color: #0f172a;
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-size: 22px;
+    }
+    p.subtitle {
+      text-align: center;
+      color: #475569;
+      font-size: 15px;
+      margin-top: 0;
+      margin-bottom: 30px;
+    }
+    .node circle {
+      fill: #fff;
+      stroke: #1d4ed8;
+      stroke-width: 2.5px;
+      cursor: pointer;
+    }
+    .node text {
+      font: 14px sans-serif;
+      cursor: pointer;
+      fill: #334155;
+    }
+    .link {
+      fill: none;
+      stroke: #cbd5e1;
+      stroke-width: 1.5px;
+    }
+    
+    /* Tooltip Styling */
+    .tooltip {
+      position: absolute;
+      text-align: left;
+      padding: 14px;
+      font: 13px sans-serif;
+      color: #334155;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      pointer-events: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      opacity: 0;
+      transition: opacity 0.2s;
+      max-width: 320px;
+      z-index: 10;
+      line-height: 1.5;
+    }
+    .tooltip strong.title {
+      display: block;
+      margin-bottom: 8px;
+      color: #1d4ed8;
+      font-size: 14px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 4px;
+    }
+    .tooltip strong.level {
+      color: #0f172a;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="widget-container">
+    <h2>Phase 2: Equity Readiness Assessment</h2>
+    <p class="subtitle">Conceptual Framework based on the "Who Bears the Costs?" Dimensions</p>
+    <div id="tree-chart"></div>
+  </div>
+  
+  <div id="tooltip" class="tooltip"></div>
+
+  <script>
+    // Phase 2 Data Structure mapped to the 3 Dimensions and 6 specific questions
+    const treeData = {
+      name: "Equity Readiness",
+      children: [
+        { 
+          name: "Dimension 1: Distributional Impacts",
+          description: "<strong class='level'>Core Lens:</strong><br>Can the government identify who bears the costs?",
+          children: [
+            { 
+              name: "1.1 Vulnerable Groups", 
+              description: "<strong class='level'>Question:</strong> Does the government use a formal mechanism to identify the population groups most vulnerable to climate change and to climate policies?<br><br><strong class='level'>Hint:</strong> For example, a standardized methodology covering income, gender, age, rurality, and Indigenous Peoples." 
+            },
+            { 
+              name: "1.2 Workers & Sectors at Risk", 
+              description: "<strong class='level'>Question:</strong> Does the government regularly analyse which sectors and workers are at risk from the low-carbon transition?<br><br><strong class='level'>Hint:</strong> Covers transition risk (energy, mining, manufacturing) and physical risk such as heat stress (agriculture, construction)." 
+            }
+          ]
+        },
+        { 
+          name: "Dimension 2: Evidence and Data",
+          description: "<strong class='level'>Core Lens:</strong><br>Can inequalities actually be measured?",
+          children: [
+            { 
+              name: "2.1 Disaggregated Data", 
+              description: "<strong class='level'>Question:</strong> Are national statistics on climate impacts disaggregated by sex, age, income level, and geographic location?<br><br><strong class='level'>Hint:</strong> Critical for designing policies responsive to heterogeneous community needs." 
+            },
+            { 
+              name: "2.2 Analytical Capacity", 
+              description: "<strong class='level'>Question:</strong> Does the government possess the internal analytical capacity to model macroeconomic and social costs of climate policies?<br><br><strong class='level'>Hint:</strong> Capacity can reside in-house or through formal standing institutional partnerships with universities." 
+            }
+          ]
+        },
+        { 
+          name: "Dimension 3: Policy Integration",
+          description: "<strong class='level'>Core Lens:</strong><br>Are climate and social policies connected?",
+          children: [
+            { 
+              name: "3.1 Impact Assessment", 
+              description: "<strong class='level'>Question:</strong> Before a climate policy is adopted, are its potential impacts on different population groups assessed?<br><br><strong class='level'>Hint:</strong> Specifically regarding regulatory instruments, carbon taxes, and subsidy reforms." 
+            },
+            { 
+              name: "3.2 Ministry Coordination", 
+              description: "<strong class='level'>Question:</strong> Is there a formal mechanism for environment, social, and economic ministries to coordinate on climate policy design?<br><br><strong class='level'>Hint:</strong> For example, a dedicated task force or inter-ministerial council with decision-making authority." 
+            }
+          ]
+        }
+      ]
+    };
+
+    // Adjusted layout measurements for the new text lengths
+    const width = 900;
+    const marginTop = 20;
+    const marginRight = 220; 
+    const marginBottom = 20;
+    const marginLeft = 140;
+    const dx = 50; 
+    const dy = 260; // Spread out the nodes horizontally
+
+    const root = d3.hierarchy(treeData);
+    const tree = d3.tree().nodeSize([dx, dy]);
+    
+    root.x0 = dy / 2;
+    root.y0 = 0;
+    
+    root.descendants().forEach((d, i) => {
+      d.id = i;
+      d._children = d.children;
+    });
+
+    const svg = d3.select("#tree-chart")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", dx)
+      .attr("viewBox", [-marginLeft, -marginTop, width, dx])
+      .attr("style", "max-width: 100%; height: auto; user-select: none; overflow: visible;");
+
+    const gLink = svg.append("g").attr("class", "link");
+    const gNode = svg.append("g").attr("class", "node");
+    
+    const tooltip = d3.select("#tooltip");
+
+    function update(source) {
+      const duration = 250;
+      const nodes = root.descendants().reverse();
+      const links = root.links();
+
+      tree(root);
+
+      let left = root;
+      let right = root;
+      root.eachBefore(node => {
+        if (node.x < left.x) left = node;
+        if (node.x > right.x) right = node;
+      });
+
+      const height = right.x - left.x + marginTop + marginBottom;
+      svg.transition().duration(duration).attr("height", height)
+         .attr("viewBox", [-marginLeft, left.x - marginTop, width, height]);
+
+      const node = gNode.selectAll("g").data(nodes, d => d.id);
+      
+      const nodeEnter = node.enter().append("g")
+          .attr("transform", d => `translate(${source.y0},${source.x0})`)
+          .attr("fill-opacity", 0)
+          .attr("stroke-opacity", 0)
+          .on("mouseover", function(event, d) {
+            if (d.data.description) {
+              tooltip.transition().duration(200).style("opacity", 1);
+              tooltip.html(`<strong class='title'>${d.data.name}</strong>${d.data.description}`)
+                .style("left", (event.pageX + 20) + "px")
+                .style("top", (event.pageY - 40) + "px");
+            }
+          })
+          .on("mousemove", function(event, d) {
+            if (d.data.description) {
+              tooltip.style("left", (event.pageX + 20) + "px")
+                     .style("top", (event.pageY - 40) + "px");
+            }
+          })
+          .on("mouseout", function() {
+            tooltip.transition().duration(300).style("opacity", 0);
+          })
+          .on("click", (event, d) => {
+            if (d.children || d._children) {
+              d.children = d.children ? null : d._children;
+              update(d);
+            }
+          });
+
+      nodeEnter.append("circle")
+          .attr("r", 6.5)
+          .attr("fill", d => d._children ? "#1d4ed8" : "#fff");
+
+      nodeEnter.append("text")
+          .attr("dy", "0.31em")
+          .attr("x", d => d._children ? -14 : 14)
+          .attr("text-anchor", d => d._children ? "end" : "start")
+          .text(d => d.data.name)
+          .clone(true).lower()
+          .attr("stroke-linejoin", "round")
+          .attr("stroke-width", 4)
+          .attr("stroke", "white");
+
+      const nodeUpdate = node.merge(nodeEnter).transition().duration(duration)
+          .attr("transform", d => `translate(${d.y},${d.x})`)
+          .attr("fill-opacity", 1)
+          .attr("stroke-opacity", 1);
+
+      nodeUpdate.select("circle")
+          .attr("fill", d => d._children ? (d.children ? "#fff" : "#1d4ed8") : "#fff");
+
+      const nodeExit = node.exit().transition().duration(duration).remove()
+          .attr("transform", d => `translate(${source.y},${source.x})`)
+          .attr("fill-opacity", 0)
+          .attr("stroke-opacity", 0);
+
+      const link = gLink.selectAll("path").data(links, d => d.target.id);
+      const linkEnter = link.enter().append("path")
+          .attr("d", d => {
+            const o = {x: source.x0, y: source.y0};
+            return d3.linkHorizontal().x(d => d.y).y(d => d.x)({source: o, target: o});
+          });
+
+      link.merge(linkEnter).transition().duration(duration)
+          .attr("d", d3.linkHorizontal().x(d => d.y).y(d => d.x));
+
+      link.exit().transition().duration(duration).remove()
+          .attr("d", d => {
+            const o = {x: source.x, y: source.y};
+            return d3.linkHorizontal().x(d => d.y).y(d => d.x)({source: o, target: o});
+          });
+
+      root.eachBefore(d => {
+        d.x0 = d.x;
+        d.y0 = d.y;
+      });
+    }
+
+    update(root);
+  </script>
+</body>
+</html>
