@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Regional Climate Policy Toolkit - Inclusive by Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+html, body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  background-color: #f0f4f8 !important; 
+  color: #0f172a !important; 
+  margin: 0;
+  padding: 0;
+}
+* { box-sizing: border-box; }
+
+.page-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.left-column {
+  width: 340px;
+  flex: 0 0 340px;
+  padding: 20px;
+}
+
+.right-column {
+  flex: 1;
+  min-width: 0;
+  padding: 20px 20px 20px 0;
+}
+
+.card {
+  background-color: #ffffff !important; 
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.section-header {
+  font-size: 15px;
+  font-weight: 500;
+  color: #475569;
+  text-transform: uppercase;
+  margin: 0 0 12px 0;
+  display: block;
+}
+
+.pill-grid { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+.pill { background-color: #f8fafc !important; border-radius: 6px; padding: 14px 16px; border: 1px solid #e2e8f0; }
+
+/* Full-width color slider track with indicator notch */
+.slider-container {
+  margin-top: 10px;
+}
+.slider-track {
+  position: relative;
+  width: 100%;
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(to right, #fde725 0%, #faca38 15%, #f58555 35%, #ca4c80 55%, #783b98 75%, #353393 90%, #171a2e 100%);
+}
+.slider-notch {
+  position: absolute;
+  top: -4px;
+  width: 5px;
+  height: 20px;
+  background: #0f172a;
+  border: 1px solid #ffffff;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  transition: left 0.4s ease;
+}
+.slider-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10.5px;
+  color: #64748b;
+  margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.mlabel { font-size: 14px; color: #334155; margin-bottom: 0; font-weight: 500; }
+.mval { font-size: 21px; font-weight: 500; color: #0f172a; line-height: 1; }
+
+.focus-tag { font-size: 14px; font-weight: 500; padding: 2px 8px; border-radius: 6px; background: rgba(115, 90, 37, 0.15); color: #5f4a1c; display: inline; line-height: 1.6; }
+
+.tab-strip { display: flex; border-bottom: 1px solid #cbd5e1; margin-bottom: 16px; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; gap: 4px; }
+.tab { font-size: 13px; font-weight: 500; padding: 10px 10px; cursor: pointer; color: #475569; border-bottom: 2px solid transparent; margin-bottom: -1px; background: none; border-top: none; border-left: none; border-right: none; font-family: 'Roboto', sans-serif; transition: all 0.2s ease; white-space: nowrap; }
+.tab:hover { color: #1d4ed8; background-color: #f1f5f9; border-radius: 4px 4px 0 0; }
+.tab.active { color: #0f172a; border-bottom: 2px solid #1d4ed8; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.brief-section { margin-bottom: 24px; }
+.brief-section-title { font-size: 16px; font-weight: 600; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; border-left: 3px solid #1d4ed8; padding-left: 10px; }
+.brief-body-text { font-size: 15px; color: #334155; line-height: 1.7; margin: 0; }
+
+/* Regional Visuals: Seamless display without borders */
+.regional-visuals {
+  margin: 14px 0 16px 0;
+  width: 100%;
+}
+.regional-visuals img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: none;
+}
+.regional-visuals img.color-bar-img {
+  margin-top: 6px;
+}
+
+select {
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 15px;
+  padding: 6px;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  border: 1px solid #94a3b8;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Claude's Elements Styled */
+.src { display: inline-block; font: 600 11px system-ui; padding: 2px 8px; border-radius: 10px; background: #e8f0fa; color: #0b57a4; margin-left: 6px; vertical-align: middle; }
+.src.r { background: #eef3e8; color: #3d6320; }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; margin-top: 8px; background: #fff; }
+th, td { padding: 9px 12px; border-bottom: 1px solid #e2e8f0; text-align: left; }
+th { font-weight: 600; color: #475569; cursor: pointer; background: #f8fafc; border-top: 1px solid #e2e8f0; }
+th:hover { background: #f1f5f9; color: #1d4ed8; }
+td.n { font-variant-numeric: tabular-nums; font-weight: 500; }
+.case, .rec { border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px; margin-bottom: 12px; background: #f8fafc; }
+.case h4, .rec h4 { margin: 2px 0 8px; font-size: 16px; font-weight: 500; color: #0f172a; }
+.tag { font: 700 11px system-ui; letter-spacing: .05em; text-transform: uppercase; color: #1d4ed8; display: block; margin-bottom: 4px; }
+.why { background: #f1f5f9; border-left: 3px solid #1d4ed8; padding: 8px 12px; font-size: 13.5px; margin-top: 10px; border-radius: 0 4px 4px 0; color: #475569; line-height: 1.5; }
+.na { color: #64748b; font-style: italic; }
+.note { font-size: 13px; color: #64748b; font-style: italic; }
+ul.met-list { margin-top: 8px; padding-left: 20px; }
+ul.met-list li { margin-bottom: 6px; font-size: 15px; color: #334155; line-height: 1.6; }
+
+
+/* Phase 1 clean-up: index cards, bars, filter chips, report excerpts */
+.idx-card { border: 1px solid #e2e8f0; border-radius: 6px; padding: 16px 18px; margin-bottom: 14px; background: #f8fafc; }
+.idx-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.idx-name { font-size: 16px; font-weight: 500; color: #0f172a; }
+.idx-score { font-size: 24px; font-weight: 500; color: #0f172a; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.idx-score span { font-size: 12px; color: #475569; }
+.idx-desc { font-size: 14px; color: #475569; line-height: 1.6; margin: 4px 0 12px; }
+.bar-row { display: flex; align-items: center; gap: 12px; margin: 7px 0; font-size: 14px; color: #334155; }
+.bar-label { flex: 0 0 38%; min-width: 0; }
+.bar-track2 { flex: 1; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; }
+.bar-fill2 { height: 100%; background: #1d4ed8; border-radius: 4px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.bar-na { flex: 1; color: #64748b; font-style: italic; font-size: 13px; }
+.bar-val { flex: 0 0 44px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 500; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 8px; }
+.chip { font: 500 13px 'Roboto', sans-serif; padding: 6px 12px; border: 1px solid #94a3b8; border-radius: 16px; background: #fff; color: #334155; cursor: pointer; }
+.chip:hover { border-color: #1d4ed8; color: #1d4ed8; }
+.chip.on { background: #1d4ed8; border-color: #1d4ed8; color: #fff; }
+.dtag { display: inline-block; font: 600 11px system-ui; padding: 2px 8px; border-radius: 10px; background: #e8f0fa; color: #0b57a4; margin: 6px 6px 0 0; }
+.excerpt { margin: 8px 0 6px; padding: 2px 0 2px 14px; border-left: 3px solid #cbd5e1; font-size: 14.5px; color: #334155; line-height: 1.65; }
+
+@media print {
+  @page { size: letter; margin: 1in; }
+  body { background-color: #ffffff !important; margin: 0 !important; }
+  .left-column { display: none !important; }
+  .right-column { padding: 0 !important; width: 100% !important; margin: 0 !important; }
+  .card { border: none !important; box-shadow: none !important; padding: 0 !important; margin-bottom: 30px !important; }
+  .tab-strip, #downloadBtn, .chip-row { display: none !important; }
+  .tab-panel { display: none; }
+  .tab-panel.active, .tab-panel.print-active { display: block !important; page-break-inside: auto; }
+  .brief-section-title { color: #000 !important; border-left-color: #000 !important; }
+  .brief-body-text, table, th, td, .note, .src, .case, .rec, .idx-card, .idx-name, .idx-score, .idx-desc, .bar-row, .excerpt { color: #000 !important; }
+  .idx-card, .case, .rec { page-break-inside: avoid; }
+  #print-header, .print-tab-title { display: block !important; }
+}
+
+@media (max-width: 1100px) {
+  .page-layout { flex-direction: column; }
+  .left-column, .right-column { width: 100%; flex: 1 1 auto; padding: 20px; }
+}
+</style>
+</head>
+
+<body onload="initApp()">
+<div id="print-header" style="display: none;">
+  <h1 style="font-size: 24px; font-weight: 700; color: #000; margin: 0 0 20px 0; text-align: center; text-transform: uppercase;">Climate Policy Toolkit: Inclusive By Design</h1>
+</div>
+<div class="page-layout">
+  <div class="left-column">
+    
+    <div class="card">
+      <label class="section-header">SELECT WORLD REGION &#8628;</label>
+      <select id="regionSelect" onchange="updateRegion()">
+        <option value="LAC" selected>Latin America and the Caribbean</option>
+        <option value="Africa">Africa</option>
+        <option value="Asia">Asia</option>
+        <option value="Europe">Europe</option>
+        <option value="Oceania">Oceania</option>
+      </select>
+    </div>
+
+    <div class="card">
+      <label class="section-header">SELECT MEMBER STATE &#8628;</label>
+      <select id="countrySelect" onchange="updateCountry()">
+        <!-- Populated via JavaScript -->
+      </select>
+    </div>
+
+    <div class="card">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+        <label class="section-header" id="riskProfileHeader" style="margin-bottom: 0;">RISK PROFILE</label>
+      </div>
+      <div class="pill-grid" id="pillGrid"></div>
+    </div>
+    
+  </div>
+
+  <div class="right-column">
+    
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;">
+        <div style="font-size: 15px; color: #334155; line-height: 1.7; margin: 0; flex: 1;" id="summaryContainer"></div>
+        <button id="downloadBtn" onclick="downloadCountryReport()" style="background-color: rgba(15, 23, 42, 0.05); color: #0f172a; border: 1px solid #0f172a; padding: 10px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; display: none; white-space: nowrap; transition: all 0.2s;">DOWNLOAD COUNTRY REPORT</button>
+      </div>
+    </div>
+
+    <div class="card" id="tabsCard">
+      <div class="tab-strip">
+        <button id="btn-risk" class="tab active" onclick="switchTab('risk',this)" style="color: #735A25;">MAIN RISKS & VULNERABLE GROUPS</button>
+        <button id="btn-recs" class="tab" onclick="switchTab('recs',this)">POLICY RECOMMENDATIONS</button>
+        <button id="btn-cases" class="tab" onclick="switchTab('cases',this)">WHAT THE REPORT SAYS</button>
+        <button id="btn-met" class="tab" onclick="switchTab('met',this)">METHOD & SOURCES</button>
+        <!-- PHASE 2 TAB: Dormant and invisible for Phase 1 validation -->
+        <button id="btn-equity" class="tab" onclick="switchTab('equity',this)" style="display: none; color: #1d4ed8; font-weight: 700;">EQUITY ASSESSMENT</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-risk">
+        <h2 class="print-tab-title" style="display: none; font-size: 18px; font-weight: bold; margin-top: 24px; margin-bottom: 16px; border-bottom: 1px solid #000; padding-bottom: 4px; color: #000;">MAIN RISKS & VULNERABLE GROUPS</h2>
+        <div class="brief-section">
+          <div id="riskContentArea"></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-recs">
+        <h2 class="print-tab-title" style="display: none; font-size: 18px; font-weight: bold; margin-top: 24px; margin-bottom: 16px; border-bottom: 1px solid #000; padding-bottom: 4px; color: #000;">POLICY RECOMMENDATIONS</h2>
+        <div class="brief-section">
+          <div id="recContentArea"></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-cases">
+        <h2 class="print-tab-title" style="display: none; font-size: 18px; font-weight: bold; margin-top: 24px; margin-bottom: 16px; border-bottom: 1px solid #000; padding-bottom: 4px; color: #000;">WHAT THE REPORT SAYS</h2>
+        <div class="brief-section">
+          <div id="caseContent"></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-met">
+        <h2 class="print-tab-title" style="display: none; font-size: 18px; font-weight: bold; margin-top: 24px; margin-bottom: 16px; border-bottom: 1px solid #000; padding-bottom: 4px; color: #000;">METHOD & SOURCES</h2>
+        <div class="brief-section">
+          <div id="metContentArea"></div>
+        </div>
+      </div>
+
+      <!-- Preserved dormant Phase 2 container -->
+      <div class="tab-panel" id="tab-equity">
+        <div class="brief-section">
+          <div id="equity-placeholder" style="display: none; padding: 30px 20px; background-color: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 8px; color: #334155; text-align: center; margin-top: 10px; font-weight: 500;">
+            Please select a member state in the top left corner of this window in order to complete the readiness equity assessment.
+          </div>
+          <div id="equity-form-container">
+            <!-- Form content preserved from FINAL-FINAL -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ---------- DATA OBJECTS FROM CLAUDE'S DATABASE EXTRACTION ----------
+const D = {"order":["ATG","ARG","BHS","BRB","BLZ","BOL","BRA","CHL","COL","CRI","CUB","DMA","DOM","ECU","SLV","GRD","GTM","GUY","HTI","HND","JAM","MEX","NIC","PAN","PRY","PER","KNA","LCA","VCT","SUR","TTO","URY","VEN"],"c":{"ATG":{"n":"Antigua and Barbuda","e":8.37,"s":3.79,"t":7.96,"pc":[2.02,3.68,null,9.27,0.78],"tc":[3.98,5.81,6.9,null,null,null,9.0],"sids":1,"w":null,"i":null},"ARG":{"n":"Argentina","e":5.4,"s":2.43,"t":5.89,"pc":[3.06,3.32,2.03,0.67,4.4],"tc":[3.2,4.19,5.14,4.28,6.69,null,7.02],"sids":0,"w":[9.7,0.6,0.4,13.2,4.0,5.1],"i":[955032,2022]},"BHS":{"n":"Bahamas","e":5.24,"s":1.58,"t":6.71,"pc":[3.81,2.44,1.12,1.81,0.41],"tc":[1.25,6.24,5.95,4.76,null,5.71,9.81],"sids":1,"w":null,"i":null},"BRB":{"n":"Barbados","e":6.88,"s":3.56,"t":6.57,"pc":[2.59,4.4,0.21,8.55,2.9],"tc":[4.58,4.1,7.95,4.22,null,9.57,2.74],"sids":1,"w":[11.7,1.2,0.9,8.0,3.7,4.4],"i":null},"BLZ":{"n":"Belize","e":6.16,"s":4.8,"t":7.28,"pc":[5.7,5.91,3.45,6.99,2.28],"tc":[5.73,6.67,3.19,6.81,3.87,null,9.64],"sids":1,"w":[23.6,2.8,null,8.8,3.2,null],"i":null},"BOL":{"n":"Bolivia (Plurinational State of)","e":4.19,"s":5.66,"t":7.37,"pc":[7.85,6.32,5.4,3.68,5.03],"tc":[4.71,8.05,3.1,6.33,6.85,null,7.24],"sids":0,"w":[32.0,12.1,4.8,13.1,5.8,4.1],"i":[7000000,2013]},"BRA":{"n":"Brazil","e":3.69,"s":2.34,"t":7.79,"pc":[4.59,4.56,1.55,1.3,1.09],"tc":[6.25,3.62,5.52,5.66,7.26,null,9.57],"sids":0,"w":[15.5,1.8,0.7,12.8,4.2,3.9],"i":[896900,2022]},"CHL":{"n":"Chile","e":3.04,"s":2.22,"t":4.25,"pc":[1.87,3.01,4.55,1.24,1.87],"tc":[3.2,3.33,6.0,2.95,null,0.71,7.98],"sids":0,"w":[14.1,2.0,1.2,14.1,4.0,6.0],"i":[2185792,2022]},"COL":{"n":"Colombia","e":2.83,"s":2.45,"t":7.87,"pc":[4.38,4.25,1.79,2.02,1.14],"tc":[5.55,4.43,4.67,5.75,8.06,null,9.76],"sids":0,"w":[21.3,3.0,1.8,13.1,5.0,4.7],"i":[1905617,2022]},"CRI":{"n":"Costa Rica","e":2.42,"s":1.95,"t":6.39,"pc":[2.64,3.37,2.03,1.92,1.3],"tc":[5.73,5.0,5.38,3.49,3.95,null,8.9],"sids":0,"w":[19.7,2.9,2.8,13.8,4.5,4.3],"i":[104143,2022]},"CUB":{"n":"Cuba","e":6.8,"s":3.43,"t":6.77,"pc":[2.31,6.42,4.55,2.85,1.92],"tc":[3.98,5.19,8.9,4.4,null,null,5.81],"sids":1,"w":null,"i":null},"DMA":{"n":"Dominica","e":8.25,"s":3.29,"t":7.45,"pc":[4.77,4.92,null,3.52,0.73],"tc":[5.13,5.48,5.24,null,6.29,null,8.36],"sids":1,"w":null,"i":null},"DOM":{"n":"Dominican Republic","e":6.16,"s":2.47,"t":6.9,"pc":[4.02,3.73,0.27,1.71,3.94],"tc":[5.13,8.71,4.38,6.45,4.52,null,5.26],"sids":1,"w":[15.7,0.8,1.6,10.8,3.2,3.3],"i":null},"ECU":{"n":"Ecuador","e":3.1,"s":3.41,"t":6.81,"pc":[2.51,5.54,2.57,4.61,2.75],"tc":[5.44,4.67,4.05,5.36,5.89,null,8.71],"sids":0,"w":[36.4,12.0,4.8,11.1,4.0,3.9],"i":[1100000,2022]},"SLV":{"n":"El Salvador","e":6.14,"s":4.32,"t":8.55,"pc":[5.36,6.17,4.71,3.11,2.8],"tc":[7.11,9.62,3.62,5.27,9.03,null,6.19],"sids":0,"w":[22.6,2.3,2.3,14.9,6.8,5.3],"i":null},"GRD":{"n":"Grenada","e":6.97,"s":4.63,"t":6.17,"pc":[3.21,4.66,4.09,8.19,3.42],"tc":[4.58,3.19,4.52,null,5.81,null,8.24],"sids":1,"w":[22.1,2.1,null,8.1,2.6,null],"i":null},"GTM":{"n":"Guatemala","e":4.31,"s":6.6,"t":8.72,"pc":[6.68,6.11,6.9,6.58,6.32],"tc":[8.15,8.81,1.48,7.05,6.94,null,9.1],"sids":0,"w":[37.9,7.6,3.3,14.5,7.7,3.1],"i":[6500000,2022]},"GUY":{"n":"Guyana","e":6.44,"s":5.0,"t":6.71,"pc":[7.38,2.07,2.33,8.86,4.61],"tc":[5.96,7.33,4.29,6.27,1.29,null,8.6],"sids":1,"w":[22.6,3.2,0.9,16.2,4.1,5.3],"i":[78500,2022]},"HTI":{"n":"Haiti","e":6.43,"s":7.03,"t":7.69,"pc":[8.13,8.45,7.03,5.18,5.75],"tc":[8.33,9.33,2.48,9.52,0.48,null,7.36],"sids":1,"w":null,"i":null},"HND":{"n":"Honduras","e":5.32,"s":5.11,"t":8.06,"pc":[5.83,7.2,4.44,5.08,3.21],"tc":[6.9,8.24,2.24,6.14,6.37,null,9.05],"sids":0,"w":[31.1,2.3,2.9,13.6,6.3,4.1],"i":null},"JAM":{"n":"Jamaica","e":5.64,"s":3.58,"t":7.17,"pc":[5.91,5.8,0.8,5.91,0.31],"tc":[5.13,5.95,4.57,5.0,8.15,null,6.71],"sids":1,"w":[25.0,4.4,2.8,7.3,2.3,3.0],"i":null},"MEX":{"n":"Mexico","e":4.91,"s":2.84,"t":6.39,"pc":[3.42,3.58,3.74,2.23,2.38],"tc":[5.13,4.76,4.76,5.06,4.68,null,8.07],"sids":0,"w":[18.2,2.2,1.9,18.2,6.7,6.2],"i":[16933283,2022]},"NIC":{"n":"Nicaragua","e":6.14,"s":5.16,"t":9.23,"pc":[3.65,6.89,5.96,5.13,4.35],"tc":[6.9,9.05,3.14,5.84,9.68,null,8.86],"sids":0,"w":[35.8,3.6,null,12.8,5.2,null],"i":[612000,2022]},"PAN":{"n":"Panama","e":1.91,"s":2.67,"t":8.15,"pc":[2.85,2.59,0.75,3.89,4.51],"tc":[3.62,6.14,5.0,5.75,9.6,null,9.17],"sids":0,"w":[23.0,4.0,2.8,9.2,3.7,4.2],"i":[417559,2022]},"PRY":{"n":"Paraguay","e":4.92,"s":4.43,"t":7.84,"pc":[6.04,4.77,2.14,4.92,4.77],"tc":[5.55,7.62,3.43,6.39,6.53,null,8.6],"sids":0,"w":[24.5,4.9,2.5,10.7,3.3,3.2],"i":[122461,2022]},"PER":{"n":"Peru","e":3.29,"s":4.2,"t":5.98,"pc":[4.59,5.18,5.75,2.54,3.52],"tc":[4.45,5.62,4.48,5.12,4.44,null,6.79],"sids":0,"w":[30.4,10.3,3.5,9.9,3.7,3.3],"i":[4000000,2022]},"KNA":{"n":"Saint Kitts and Nevis","e":7.94,"s":4.25,"t":4.94,"pc":[5.13,2.75,null,8.6,0.98],"tc":[3.49,2.9,6.14,null,null,3.29,6.57],"sids":1,"w":null,"i":null},"LCA":{"n":"Saint Lucia","e":7.04,"s":4.05,"t":7.22,"pc":[5.52,4.46,0.91,9.64,0.36],"tc":[5.96,7.76,5.48,4.94,3.39,null,8.17],"sids":1,"w":[16.4,1.8,null,6.1,2.3,null],"i":null},"VCT":{"n":"Saint Vincent and the Grenadines","e":6.23,"s":4.88,"t":6.43,"pc":[6.55,4.61,4.92,6.17,2.44],"tc":[3.36,6.0,6.33,null,4.92,null,6.57],"sids":1,"w":null,"i":null},"SUR":{"n":"Suriname","e":6.86,"s":4.22,"t":8.12,"pc":[6.17,5.08,2.97,4.46,3.01],"tc":[6.15,6.76,4.9,6.02,8.95,null,6.38],"sids":1,"w":[15.8,2.6,null,16.8,3.9,null],"i":[20344,2022]},"TTO":{"n":"Trinidad and Tobago","e":7.11,"s":3.15,"t":4.47,"pc":[3.5,3.21,2.33,6.48,1.24],"tc":[2.4,4.57,6.43,3.86,null,1.0,6.79],"sids":1,"w":[1.7,0.5,0.4,11.6,2.3,4.2],"i":null},"URY":{"n":"Uruguay","e":3.64,"s":1.85,"t":5.73,"pc":[2.44,3.26,0.7,0.41,3.99],"tc":[5.34,3.9,6.29,3.61,null,3.86,6.9],"sids":0,"w":[16.4,2.3,1.4,11.3,3.7,4.9],"i":null},"VEN":{"n":"Venezuela (Bolivarian Republic of)","e":6.44,"s":3.92,"t":8.65,"pc":[5.65,6.84,1.47,1.14,5.18],"tc":[4.84,7.57,5.81,8.07,6.45,null,8.48],"sids":0,"w":[15.3,1.5,0.9,12.6,4.1,5.1],"i":[896000,2022]}},"pl":["Health (life expectancy)","Wealth (GNI per capita)","Gender (Gender Development Index)","Rurality (% rural population)","Age dependency (% under 15 or over 65)"],"tl":["Education (mean years of schooling)","Research output (scientific articles)","Young workforce ratio","Gender inequality (GII)","Debt service (% of GNI)","Central government debt (% of GDP)","Inequality (Gini)"]};
+
+// Inject hazard data from climate_index.csv
+const hzData = {"ATG": [8.2, 8.43, 0.0, 0.0, 7.2], "ARG": [3.77, 0.0, 3.62, 7.98, 0.0], "BHS": [4.59, 1.4, 0.0, 0.0, 8.9], "BRB": [5.9, 9.17, 0.0, 0.0, 4.51], "BLZ": [0.0, 7.02, 4.8, 1.81, 3.9], "BOL": [0.0, 0.0, 5.92, 6.01, 0.0], "BRA": [1.48, 2.23, 5.2, 1.61, 0.0], "CHL": [0.0, 8.18, 0.46, 0.0, 0.0], "COL": [0.16, 1.07, 4.54, 1.92, 0.37], "CRI": [0.0, 3.72, 1.78, 1.4, 0.0], "CUB": [4.84, 3.31, 4.14, 0.0, 7.07], "DMA": [7.62, 9.5, 0.0, 0.0, 6.34], "DOM": [0.0, 8.26, 2.57, 0.0, 6.71], "ECU": [2.38, 0.0, 0.39, 6.06, 0.0], "SLV": [0.0, 5.29, 6.78, 0.16, 5.24], "GRD": [6.89, 8.93, 0.0, 0.62, 3.41], "GTM": [0.0, 5.45, 2.96, 0.57, 3.29], "GUY": [5.25, 9.92, 3.16, 0.0, 0.0], "HTI": [3.03, 6.36, 2.43, 0.0, 6.46], "HND": [0.0, 6.2, 4.93, 1.45, 2.56], "JAM": [5.82, 3.55, 0.0, 0.1, 6.59], "MEX": [0.0, 2.98, 5.79, 0.83, 4.39], "NIC": [0.0, 5.87, 7.83, 3.16, 0.61], "PAN": [0.0, 0.0, 2.7, 2.75, 0.0], "PRY": [0.0, 0.0, 8.55, 5.44, 0.0], "PER": [0.57, 0.0, 2.3, 6.48, 0.0], "KNA": [7.05, 8.1, 0.0, 0.0, 7.44], "LCA": [5.33, 9.59, 0.0, 0.0, 5.12], "VCT": [2.21, 9.83, 0.0, 0.93, 4.76], "SUR": [7.38, 9.26, 2.89, 0.0, 0.0], "TTO": [8.77, 10.0, 0.0, 0.0, 1.46], "URY": [0.0, 0.0, 1.71, 8.65, 0.0], "VEN": [0.0, 9.34, 7.5, 0.52, 0.98]};
+
+// Merge hazard data into main object
+D.hzl = ["Sea-level rise", "Drought", "Extreme heat", "Extreme rainfall", "Hurricanes"];
+Object.keys(D.c).forEach(k => {
+  if (hzData[k]) {
+    D.c[k].hz = hzData[k];
+  }
+});
+
+const DIM={E:"Climate change exposure",S:"Social vulnerability (physical climate impacts)",T:"Workers’ vulnerability to climate transition"};
+const NAME={E:"Climate change exposure index",S:"Social vulnerability index – physical climate impacts",T:"Workers’ vulnerability to climate transition impacts index"};
+const TAGL = {E:"Climate exposure", S:"Social vulnerability", T:"Workers’ transition", X:"All three indices"};
+const RECS_THEMES = [
+ {theme:"Achieving the Sustainable Development Goals", items:[
+  ["Incorporate SDG 10 and SDG 13 jointly into government budgetary plans and programmes.","65",["X"]],
+  ["Promote a comprehensive and synergistic approach to advancing SDGs 1, 5 and 7, ensuring that their interconnections are leveraged for maximum impact.","65–66",["S"]],
+  ["Promote strategic environmental assessment (SEA) to minimize the environmental and climate impacts of economic development plans and programmes.","66",["X"]]
+ ]},
+ {theme:"Prioritizing adaptation and resilience", items:[
+  ["Strengthen social protection systems through NDC adaptation strategies.","66",["S"]],
+  ["Prioritize climate finance with a vulnerable-first approach.","66",["E","S"]],
+  ["Create legal frameworks and allocate loss and damage funds to support planned and emergent climate migration.","66",["E"]]
+ ]},
+ {theme:"Addressing the distributional impacts of climate policies", items:[
+  ["Compensatory measures to shield affected groups, communities or enterprises.","67",["T"]],
+  ["Choosing worker solidarity over labour resistance as a path to inclusive transition.","67",["T"]],
+  ["Integrate gender considerations into key governmental plans and programmes addressing climate change risks.","67",["S","T"]],
+  ["Promote community-led heritage preservation.","67",["S"]],
+  ["Expand research on the distributional impacts of climate policies, prioritizing the development of advanced metrics to guide decision-makers and accurately assess outcomes.","67",["X"]],
+  ["Embedding climate education and awareness programmes for empowered action.","67",["X"]]
+ ]},
+ {theme:"Accelerating the widespread deployment of clean and zero-emission technologies", items:[
+  ["Integrating technology transfer strategies and investments into NDCs and national development plans.","68",["T"]],
+  ["Advancing regulatory frameworks for technology transfer at the local level.","68",["T"]],
+  ["Prioritize sustainability approaches in the research, development and demonstration (RD&D) of emerging and advanced technologies.","68",["T"]],
+  ["Low-carbon supply chains should be supported and prioritized.","68",["T"]]
+ ]},
+ {theme:"Safeguarding cultural and natural heritage from climate change threats", items:[
+  ["Incorporate global cultural heritage preservation into the Loss and Damage Fund of the UNFCCC.","69",["E"]],
+  ["Develop climate-resilient conservation strategies.","69",["E"]]
+ ]}
+];
+
+/* Passages from the report. c = countries named in the passage; reg = shown to every LAC country that is not
+   named in it; sids = shown only for small island developing States. Text is quoted from the report. */
+const ENTRIES = [
+ {c:["MEX"], t:"Women-led adaptation in the Gulf of Mexico coastal wetlands",
+  q:"In Mexico, the project “Adaptation to Climate Change Impacts on the Coastal Wetlands in the Gulf of Mexico”, carried out between 2012 and 2018, stands out as a notable example. This initiative, which integrated a gender-sensitive approach, empowered local communities led by women to collaboratively analyse their adaptation needs in partnership with experts from various government agencies, fostering inclusive and informed decision-making (WBG, 2017).",
+  r:"Chapter 1, Box I.5, p. 27"},
+ {c:["MEX"], t:"Coffee farms under rising temperatures",
+  q:"For at least the past two decades, Mexico has experienced a drop in both the size of its cultivation areas and, consequently, its production levels. Between 2003 and 2023, the surface dedicated to coffee cultivation decreased from 789,073 hectares (ha) to 699,506 ha (SIAP, 2024), while output registered a fall of around 34% in the same time frame, going from 1.621 million tons (MMT) to 1.058 MMT.",
+  r:"Chapter 2, Box II.4, p. 53"},
+ {c:["MEX"], reg:true, t:"The Americas: inequality among workers and the US–Mexico border",
+  q:"The Americas, on the other hand, face their greatest vulnerability in terms of inequality, highlighting deep-rooted disparities which could exacerbate sociopolitical instability. South-to-North migration, driven by both legal and illegal movements of workers which have been precipitated by economic, political or violent circumstances, highlights ongoing conflicts at the border between the United States of America and Mexico.",
+  r:"Chapter 2, Section II.5, p. 51"},
+ {c:["COL"], t:"Exposure to all five climate hazards",
+  q:"However, some countries, even if not among the most exposed, will face significant challenges to adaptation since they will be subject to a wide variety of extreme climate events. Australia, Colombia and Madagascar are the only countries exposed to all five climate risk categories.",
+  r:"Chapter 1, Section I.1, p. 8"},
+ {c:["BRA","COL"], t:"Hydropower: diversified in Brazil, heavily relied upon in Colombia",
+  q:"Countries such as Brazil and Viet Nam have proactively addressed hydropower risks by investing in diversified renewable portfolios, integrating wind and solar power to reduce their vulnerability. Conversely, Colombia and India continue to rely heavily on hydropower, making them more susceptible to energy shortages and economic disruptions due to erratic hydrological conditions.",
+  r:"Chapter 2, Section II.4, p. 47"},
+ {c:["BRA","COL"], t:"Hydropower plants projected to be at risk",
+  q:"Brazil is a notable example, since a large number of its hydropower plants are expected to bear the impacts of climate change. Colombia can be affected as well; even though hydropower constitutes 62.3% of its total power generation (Ritchie and Rosado, 2024).",
+  r:"Chapter 2, Box II.2, p. 48"},
+ {c:["BRA","COL","MEX"], reg:true, t:"Escazú Agreement on environmental rights and defenders",
+  q:"The Escazú Agreement, which came into force on 22 April 2021, is the first regional treaty in Latin America and the Caribbean focused on environmental and human rights and the first globally to include provisions for protecting environmental defenders. [...] However, key countries like Brazil and Colombia have yet to ratify the agreement, and others, such as Mexico, despite having ratified it, still face challenges in its effective implementation (ECLAC, 2022).",
+  r:"Chapter 1, Section I.5, footnote 4, p. 29"},
+ {c:["ECU"], t:"Fuel-subsidy removal and nationwide protests",
+  q:"Since 2021, the Government of Ecuador has attempted to remove fuel subsidies, causing sharp increases in fuel prices and triggering nationwide protests, mainly by Indigenous groups and low-income communities. The Government thus reinstated subsidies to quell unrest (Vogt-Schilb and Soria, 2019).",
+  r:"Chapter 2, Box II.6, p. 61 (also Key takeaways, p. vii)"},
+ {c:["CRI"], t:"Policies aligned with 1.5°C, with an uneven social starting point",
+  q:"Among these nations, Costa Rica stands out as the only country with policies and actions that align with the 1.5°C target of the Paris Agreement, coupled with a transparent and credible net-zero target. Nevertheless, Costa Rica’s journey towards net zero is complicated by significant socioeconomic hurdles, including a population with generally low levels of education and a society marked by high inequality; in fact, the country also has a higher-than-average proportion of workers vulnerable to the economic transitions required for achieving net zero.",
+  r:"Chapter 2, Section II.1, p. 39 (also p. 36)"},
+ {c:["PER"], t:"Climate-related disasters and poverty",
+  q:"Similarly, in Peru, the occurrence of just one additional climate-related disaster per year has been linked to a 16-23% increase in poverty rates (Hallegatte et al, 2020).",
+  r:"Chapter 1, Section I.2, p. 18"},
+ {c:["GTM","BOL"], t:"Indigenous Peoples exposed to climate extremes",
+  q:"Several countries have exceptionally high proportions of Indigenous residents that are exposed to extreme climate events or weather anomalies (see figure I.11). For instance, Morocco, Algeria and Myanmar each have over 25% of their populations identified as Indigenous, while Guatemala and Laos exceed 33%. Bolivia stands out, with more than 60% of its population identifying as Indigenous, reflecting the deep cultural and historical ties of its Indigenous communities.",
+  r:"Chapter 1, Section I.5, p. 30 (Figure I.11, p. 31)"},
+ {c:[], reg:true, t:"Hydropower in South America",
+  q:"These percentages vary significantly by region: in South America, hydropower represents 56.8% of total electricity generation, compared to 13.2% in North America, and 12.3% in Asia.",
+  r:"Chapter 2, Box II.2, p. 48"},
+ {c:[], sids:true, t:"Small island developing States and extreme weather",
+  q:"SIDS are particularly vulnerable to sea level rise and the devastating effects of intense hurricanes, which threaten both lives and livelihoods. With limited land area and often fragile economies, these regions face disproportionate risks from these phenomena – risks that are neither their responsibility nor within their control.",
+  r:"Chapter 1, Section I.1, pp. 12–13"},
+ {c:[], sids:true, t:"Planned relocation in Fiji, a small island developing State",
+  q:"Against this backdrop, authorities launched an ambitious adaptive relocation strategy to bring the most affected communities to safety. While this is not the only relocation case worldwide, it is the first to have a clear and explicit strategy.",
+  r:"Chapter 1, Box I.4, p. 23"}
+];
+
+// Formatting helpers
+const f2 = v => v == null ? null : v.toFixed(2);
+const fw = v => v == null ? `<span class="na">not available</span>` : v.toFixed(1) + "%";
+
+function initApp() {
+  updateRegion();
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(t => {
+    t.classList.remove("active");
+    t.style.color = '#475569';
+  });
+  const targetPanel = document.getElementById("tab-" + id);
+  if (targetPanel) {
+    targetPanel.classList.add("active");
+  }
+  if (btn) {
+    btn.classList.add("active");
+    btn.style.color = (id === 'equity') ? '#1d4ed8' : '#0f172a';
+  }
+}
+
+function updateRegion() {
+  const regionVal = document.getElementById("regionSelect").value;
+  const countrySelect = document.getElementById("countrySelect");
+  countrySelect.innerHTML = "";
+  
+  if (regionVal === "LAC") {
+    let defaultOpt = document.createElement("option");
+    defaultOpt.value = "None";
+    defaultOpt.text = "Regional overview (all 33)";
+    countrySelect.add(defaultOpt);
+
+    D.order.forEach(k => {
+      let option = document.createElement("option");
+      option.value = k;
+      option.text = D.c[k].n;
+      countrySelect.add(option);
+    });
+  } else {
+    let option = document.createElement("option");
+    option.value = "None";
+    option.text = "None selected (Prototype limit)";
+    countrySelect.add(option);
+  }
+  
+  updateCountry();
+}
+
+let sortKey = "n", sortAsc = 1;
+
+function drawTable() {
+  const ks = D.order.slice().sort((a,b) => {
+    const x = D.c[a][sortKey], y = D.c[b][sortKey];
+    return (x > y ? 1 : x < y ? -1 : 0) * sortAsc;
+  });
+  
+  const tbl = document.getElementById("idxTable");
+  if(!tbl) return;
+  
+  tbl.innerHTML = `<tr><th data-k="n">Member State</th><th data-k="e">Exposure</th><th data-k="s">Social vuln. (physical)</th><th data-k="t">Workers’ transition vuln.</th></tr>` + 
+    ks.map(q => `<tr><td>${D.c[q].n}</td><td class="n">${f2(D.c[q].e)}</td><td class="n">${f2(D.c[q].s)}</td><td class="n">${f2(D.c[q].t)}</td></tr>`).join("");
+    
+  tbl.querySelectorAll("th").forEach(h => {
+    h.onclick = () => {
+      sortAsc = sortKey == h.dataset.k ? -sortAsc : 1;
+      sortKey = h.dataset.k;
+      drawTable();
+    }
+  });
+}
+
+function updateCountry() {
+  const regionVal = document.getElementById("regionSelect").value;
+  const countryVal = document.getElementById("countrySelect").value;
+  const isRegional = (countryVal === "None" || !D.c[countryVal]);
+  
+  const displayRegionName = document.getElementById("regionSelect").options[document.getElementById("regionSelect").selectedIndex].text;
+  const grid = document.getElementById("pillGrid");
+  const summary = document.getElementById("summaryContainer");
+  const downloadBtn = document.getElementById("downloadBtn");
+  const riskArea = document.getElementById("riskContentArea");
+  const recsArea = document.getElementById("recContentArea");
+  const caseArea = document.getElementById("caseContent");
+  const metArea = document.getElementById("metContentArea");
+  const tabsCard = document.getElementById("tabsCard");
+
+  // Method & Sources content is always the same
+  const methodText = `
+    <div class="brief-section-title">What the indices are</div>
+    <p class="brief-body-text" style="margin-bottom: 12px;">Each index is built from national indicators ranked into percentiles (0–10) by category; the category scores are averaged and rescaled so the least exposed/vulnerable country scores 0 and the most scores 10 (Annex 1). A final score is therefore <b>not</b> a percentile rank. Scores are comparative and do not measure absolute hazard severity.</p>
+    <ul class="met-list">
+      <li><b>Climate change exposure:</b> change in population exposure 2040–2060 vs 1995–2014 under SSP2-RCP4.5, across hurricanes, extreme rainfall, drought, extreme heat and sea-level rise (Box I.1).</li>
+      <li><b>Social vulnerability, physical impacts:</b> health, wealth, gender, rurality, age dependency (Box I.2).</li>
+      <li><b>Workers’ vulnerability to transition:</b> workforce age, education, inequality, research output, government debt, gender (Box II.3). Debt is measured as debt service (mostly reported for global South countries) or central government debt (mostly global North); a country usually has only one of the two.</li>
+    </ul>
+
+    <div class="brief-section-title" style="margin-top: 24px;">Data provenance</div>
+    <p class="brief-body-text" style="margin-bottom: 12px;">Index scores: <i>climate_risk_index.csv</i>, <i>Physical_vulnerability_index.csv</i>, <i>Transition_vulnerability_index.csv</i>. Climate-exposure components: <i>climate_index.csv</i>. Worker sectors: <i>vulnerable_workers.csv</i>. Indigenous population: <i>ind_pop.csv</i>. All from the research database of <i>Who Bears the Costs?</i>, shown to two decimals. Blank database cells are shown as “not available”; a score of 0 is a value in the database, not a missing entry.</p>
+
+    <div class="brief-section-title" style="margin-top: 24px;">What this toolkit shows</div>
+    <ul class="met-list">
+      <li>The three published indices and their components, unchanged. No new scores, thresholds, risk categories or regional averages are created.</li>
+      <li>All 18 recommendations from Chapter 3, in the report’s wording and order. The tags beside them are a navigation aid added by the toolkit.</li>
+      <li>Passages quoted from the report that name the selected country, followed by passages that concern the wider region. Page numbers are those printed in the report.</li>
+    </ul>
+    <p class="note" style="margin-top: 16px;">Source labels: <span class="src">Database</span> = research dataset; <span class="src r">Report</span> = published report. Report: UNESCO and “la Caixa” Foundation (2025), CC-BY-SA 3.0 IGO.</p>
+  `;
+  metArea.innerHTML = methodText;
+
+  // Non-LAC regions
+  if (regionVal !== "LAC") {
+    document.getElementById("riskProfileHeader").innerText = "REGIONAL PROFILE";
+    tabsCard.style.display = "none";
+    downloadBtn.style.display = "none";
+    
+    grid.innerHTML = `
+      <div style="padding: 18px; background-color: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; text-align: center; color: #64748b; font-size: 14px; line-height: 1.5;">
+        <strong>Indices</strong><br><br>
+        Data not yet available for this region.<br>
+        No scores or classifications are shown.
+      </div>
+    `;
+    
+    summary.innerHTML = `
+      Selected region: <strong style="font-size: 17px; display: inline-block; margin: 2px 0;">${displayRegionName}</strong><br><br>
+      <div style="font-size: 16px; font-weight: 500; color: #b91c1c; margin-bottom: 14px;">
+        Only the LAC region is available for the Toolkit Pilot.
+      </div>
+      <em>The analysis and information provided in this toolkit are drawn directly from UNESCO report and corresponding databases <a href="https://www.unesco.org/en/articles/who-bears-costs-addressing-inequalities-climate-change-and-climate-action" target="_blank" style="color: #1d4ed8; text-decoration: none; font-weight: 500;">Who Bears the Costs? Addressing inequalities from climate change and climate action</a>.</em>
+    `;
+    return;
+  }
+
+  // LAC Regional Overview
+  if (isRegional) {
+    document.getElementById("riskProfileHeader").innerText = "INSTRUCTIONS";
+    tabsCard.style.display = "none";
+    downloadBtn.style.display = "none";
+
+    grid.innerHTML = `
+      <div style="padding: 18px; background-color: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; text-align: left; color: #000000; font-size: 14px; line-height: 1.5;">
+        
+        Use the dropdown menu above to select a Member State and see more details on its index scores and useful guidance from the UNESCO report.<br><br>Click the column headers in the table below the maps to sort by highest or lowest scores in each.<br><br>
+Learn more about how this information was generated: Method & Sources
+      </div>
+    `;
+
+    summary.innerHTML = `
+      Selected region: <strong style="font-size: 17px; display: inline-block; margin: 2px 0;">${displayRegionName}</strong><br>
+      <div style="margin-top: 4px; margin-bottom: 14px;"><strong>Regional Overview:</strong> Countries in Latin America and the Caribbean face different levels of climate exposure and vulnerability, and the three maps below show how these differ from one index to the next.</div>
+      
+      <div class="regional-visuals">
+        <img src="regional-image-indexes.jpg" alt="Regional Climate Indices">
+        <img src="color-bar.png" class="color-bar-img" alt="Scale Legend (0 to 10)">
+      </div>
+
+      <em>The analysis and information provided in the tabs below are drawn directly from UNESCO report <a href="https://www.unesco.org/en/articles/who-bears-costs-addressing-inequalities-climate-change-and-climate-action" target="_blank" style="color: #1d4ed8; text-decoration: none; font-weight: 500;">Who Bears the Costs? Addressing inequalities from climate change and climate action</a>.</em>
+      
+      <br><br>
+      <div class="brief-section-title">All 33 Member States – database values</div>
+      <p class="note">Click a column heading to sort. Higher values mean greater exposure or vulnerability.</p>
+      <table id="idxTable"></table>
+    `;
+    
+    // Initialize the sortable table
+    setTimeout(drawTable, 0);
+
+  } else {
+    // Member State Selected
+    const c = D.c[countryVal];
+    const countryName = c.n;
+    document.getElementById("riskProfileHeader").innerText = "MEMBER STATE RISK PROFILE";
+    tabsCard.style.display = "block";
+    downloadBtn.style.display = "block";
+
+    grid.innerHTML = [
+      { label: NAME.E, val: c.e },
+      { label: NAME.S, val: c.s },
+      { label: NAME.T, val: c.t }
+    ].map(d => `
+      <div class="pill">
+        <div style="display:flex; justify-content:space-between; align-items:end;">
+          <div class="mlabel">${d.label}</div>
+          <div class="mval">${f2(d.val)} </div>
+        </div>
+        <div class="slider-container">
+          <div class="slider-track">
+            <div class="slider-notch" style="left: ${Math.min(100, Math.max(0, d.val * 10))}%;"></div>
+          </div>
+          <div class="slider-scale">
+            <span>0 (Least)</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10 (Most)</span>
+          </div>
+        </div>
+      </div>
+    `).join("");
+
+    const rank = ["E","S","T"].sort((a,b) => c[b.toLowerCase()] - c[a.toLowerCase()]);
+    const top = rank[0];
+
+    summary.innerHTML = `
+      Selected region: <strong style="font-size: 17px; display: inline-block; margin: 2px 0;">${displayRegionName}</strong><br>
+      Selected member state: <strong style="font-size: 17px; display: inline-block; margin: 2px 0;">${countryName}</strong><br><br>
+      
+      <strong>Member state overview:</strong> Highest to lowest of the three indices: ${rank.map(d=>`<b>${DIM[d]}</b> (${f2(c[d.toLowerCase()])})`).join(" › ")}.<br>
+      <p class="note" style="margin-top: 6px;">This ordering simply sorts the three published values; it is not a classification or a new score. Indices measure different things and are not combined.</p>
+
+     <em>The analysis and information provided in the tabs below are drawn directly from UNESCO report <a href="https://www.unesco.org/en/articles/who-bears-costs-addressing-inequalities-climate-change-and-climate-action" target="_blank" style="color: #1d4ed8; text-decoration: none; font-weight: 500;">Who Bears the Costs? Addressing inequalities from climate change and climate action</a>.</em>
+    `;
+
+    // ---------- Tab 1: three index cards + context data ----------
+    const bar = (label, v) => v == null
+      ? `<div class="bar-row"><div class="bar-label">${label}</div><div class="bar-na">not available</div><div class="bar-val"></div></div>`
+      : `<div class="bar-row"><div class="bar-label">${label}</div><div class="bar-track2"><div class="bar-fill2" style="width:${Math.min(100, Math.max(0, v * 10))}%"></div></div><div class="bar-val">${f2(v)}</div></div>`;
+
+    const card = (name, score, desc, labels, vals) => `
+      <div class="idx-card">
+        <div class="idx-head"><div class="idx-name">${name}</div><div class="idx-score">${f2(score)} <span>/ 10</span></div></div>
+        <p class="idx-desc">${desc}</p>
+        ${labels.map((l, i) => bar(l, vals ? vals[i] : null)).join("")}
+      </div>`;
+
+    const w = c.w;
+    const wRow = (label, a, b, d, olderLbl) => `<tr><td>${label}</td><td class="n">${fw(a)}</td><td class="n">${fw(b)}</td><td class="n">${fw(d)} <span class="note">(${olderLbl})</span></td></tr>`;
+
+    riskArea.innerHTML = `
+      <p class="note" style="margin-bottom: 14px;">Scores run from 0 to 10; a higher score means more exposed or more vulnerable. Bars show the 0–10 category scores that make up each index, not the underlying measurements. <span class="src">Database</span></p>
+
+      ${card(NAME.E, c.e, "How much the population exposed to five climate hazards is projected to change between 1995–2014 and 2040–2060.", D.hzl, c.hz)}
+      ${card(NAME.S, c.s, "How socially vulnerable the country is to the extreme weather events in the exposure index, based on five national indicators.", D.pl, c.pc)}
+      ${card(NAME.T, c.t, "How vulnerable the country’s workers are to the changes brought by the net-zero transition, based on personal and structural factors.", D.tl, c.tc)}
+
+      <div class="brief-section-title" style="margin-top: 28px; font-size: 14px;">Context data <span class="note" style="text-transform: none; letter-spacing: 0;">(not part of the three index scores)</span> <span class="src">Database</span></div>
+      ${w ? `<table>
+        <tr><th>Share of workers in…</th><th>Total</th><th>Female</th><th>Older workers</th></tr>
+        ${wRow("Sectors exposed to physical climate impacts", w[0], w[1], w[2], "over 65")}
+        ${wRow("Sectors exposed to the transition", w[3], w[4], w[5], "over 45")}
+      </table>` : `<p class="na">Worker-sector data not available in the database for this country.</p>`}
+      <p class="brief-body-text" style="margin-top: 12px;"><b>Indigenous population:</b> ${c.i ? `${c.i[0].toLocaleString("en-US")} (data year ${c.i[1]})` : `<span class="na">not available in the database for this country</span>`}</p>
+
+      <p class="note" style="margin-top: 22px;">The report discusses vulnerable groups in general terms in Section I.2 (pp. 14–15); it does not identify vulnerable groups country by country.</p>
+    `;
+
+    // ---------- Tab 2: recommendations, report order, one tag each ----------
+    const chip = (k, lbl) => `<button class="chip${k === 'all' ? ' on' : ''}" data-f="${k}" onclick="setRecFilter('${k}')">${lbl}</button>`;
+    let recsHtml = `<p class="note">All 18 recommendations from Chapter 3, in the report’s wording and order. The tags are a navigation aid added by the toolkit: they show which of the three indices a recommendation relates to. <span class="src r">Report</span></p>
+      <div class="chip-row">${chip('all', 'All')}${chip('E', 'Climate exposure')}${chip('S', 'Social vulnerability')}${chip('T', 'Workers’ transition')}</div>`;
+    recsHtml += RECS_THEMES.map(t => `
+      <div class="rec-theme">
+        <div class="brief-section-title" style="margin-top: 20px; font-size: 14px;">${t.theme}</div>
+        ${t.items.map(([txt, pg, tags]) => `
+          <div class="rec" data-tags="${tags.join(' ')}">
+            <h4>${txt}</h4>
+            <span class="note">Chapter 3 · ${pg.includes('–') ? 'pp.' : 'p.'} ${pg}</span><br>
+            ${tags.map(g => `<span class="dtag">${TAGL[g]}</span>`).join("")}
+          </div>`).join("")}
+      </div>`).join("");
+    recsArea.innerHTML = recsHtml;
+
+    // ---------- Tab 3: what the report says ----------
+    const entryHtml = x => `
+      <div class="case">
+        <h4>${x.t}</h4>
+        <div class="excerpt">${x.q}</div>
+        <div class="note">${x.r} <span class="src r">Report</span></div>
+      </div>`;
+    const named = ENTRIES.filter(x => x.c.includes(countryVal));
+    const wider = ENTRIES.filter(x => !x.c.includes(countryVal) && ((x.reg) || (x.sids && c.sids)));
+
+    let caseHtml = `<div class="brief-section-title" style="font-size: 14px;">What the report says about ${c.n}</div>`;
+    caseHtml += named.length
+      ? named.map(entryHtml).join("")
+      : `<p class="brief-body-text" style="margin-bottom: 8px;">Beyond its index scores, the report’s text does not discuss ${c.n} by name. The passages below concern the wider region and may still be useful.</p>`;
+    caseHtml += `<div class="brief-section-title" style="margin-top: 24px; font-size: 14px;">Elsewhere in the report: Latin America and the Caribbean</div>`;
+    caseHtml += wider.map(entryHtml).join("");
+    caseArea.innerHTML = caseHtml;
+
+    // Automatically reset the view to the first tab when a new country is selected
+    switchTab('risk', document.getElementById('btn-risk'));
+  }
+}
+
+function setRecFilter(f) {
+  document.querySelectorAll('.chip').forEach(b => b.classList.toggle('on', b.dataset.f === f));
+  document.querySelectorAll('.rec[data-tags]').forEach(r => {
+    const tags = r.dataset.tags.split(' ');
+    r.style.display = (f === 'all' || tags.includes(f) || tags.includes('X')) ? '' : 'none';
+  });
+  document.querySelectorAll('.rec-theme').forEach(t => {
+    const any = Array.from(t.querySelectorAll('.rec')).some(r => r.style.display !== 'none');
+    t.style.display = any ? '' : 'none';
+  });
+}
+
+function downloadCountryReport() {
+  const countryVal = document.getElementById("countrySelect").value;
+  if (!countryVal || countryVal === "None") return;
+  const c = D.c[countryVal];
+  
+  // Temporarily change document title so the PDF saves with the correct name
+  const originalTitle = document.title;
+  document.title = `${c.n} - UNESCO Climate Policy Toolkit`;
+  
+  // Make all data tabs visible for the PDF report
+  const panels = document.querySelectorAll('.tab-panel');
+  panels.forEach(p => {
+    if(p.id !== 'tab-equity') p.classList.add('print-active');
+  });
+  
+  const activeChip = document.querySelector('.chip.on');
+  const activeFilter = activeChip ? activeChip.dataset.f : 'all';
+  setRecFilter('all');
+  
+  window.print();
+  
+  setRecFilter(activeFilter);
+  
+  // Revert changes back to normal UI view
+  panels.forEach(p => p.classList.remove('print-active'));
+  document.title = originalTitle;
+}
+</script>
+</body>
+</html>
